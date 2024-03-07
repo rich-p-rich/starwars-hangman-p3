@@ -22,4 +22,6 @@ answers = SHEET.worksheet('answers')
 
 data = answers.get_all_values()
 
-print(data)
+#print(data)
+
+print("Welcome to Starwars Hangman!")
