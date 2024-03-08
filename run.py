@@ -23,31 +23,29 @@ answers = SHEET.worksheet('answers')
 data = answers.get_all_values()
 
 #print(data)
+#print("Welcome to Starwars Hangman!")
 
-print("Welcome to Starwars Hangman!")
+#Homescreen
+"""
+Set up homescreen 
+The user chooses to play the game or read the gameplay instructions 
+"""
+def display_homescreen():
+    print('Welcome to Starwars Hangman! Save your homeworld by guessing the missing name before the Death Star is in range!\n')
+    print('Choose your option:\n')
+    option1 = '1. Play the game: press "1" and enter.\n'
+    option2 = '2. How to play: press "2" and enter.\n'
+    print(option1)
+    print(option2)
+    option = input("Enter your option:  ")
 
-#How to play
+    if option == '1':
+        print("Starting your attack run ...")
+    elif option == '2':
+        print("Loading up the Death Star plans now ...")
+    else:
+        print("No target found: please enter 1 or 2")
 
-def gameplay():
-    '''
-    Gameplay explanation
-    '''
-    
-    print()
-    print('How To Play')
-    print('Beat the Death Star and work out the identity of the hidden Star Wars name.\n')
-    print('The answer can be a character, a droid, a ship, a vehicle, a planet, a place or an alien species.\n')
-    print('_ _ _   _ _ _ _ _   _ _ _ _\n')
-    print('You have 10 attempts: either guess one letter at a time or guess the whole name.\n')
-    print('If you guess a letter and it is right, the letter will appear wherever it appears in the word.\n')
-    print('_ _ E   _ E _ _ _   _ _ _ _\n')
-    print('If your guess is wrong, the game will simpley continue depending on how many attempts you have left.\n')
-    print('If you get stuck, you can ask for up to two clues. Each clue will use up one attempt.\n')
-    print('Clue one will tell you whether the name is a character, a ship, etc, clue 2 will tell you what set of films and / or TV series they are seen most in.\n')
-    print('Clue one: a place.\n')
-    print('Clue two: the Original Trilogy.\n')
-    print('T H E   D E A T H   S T A R \n')
-
+display_homescreen()
 
 
-    return gameplay
