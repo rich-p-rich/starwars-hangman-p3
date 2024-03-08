@@ -1,4 +1,4 @@
-def how-to-play():
+def how_to_play():
     """
     Gameplay explanation
     """
