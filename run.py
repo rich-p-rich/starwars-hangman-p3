@@ -66,10 +66,25 @@ def play_the_game():
     """
     word = import_word(answers)
     hidden_word = []
+    guessed_letters = set()
+    attempts = 10
+
     for i in range(len(word)):
         hidden_word.append('_')
 
     print("Your target:", ' '.join(hidden_word))
+
+    while attempts > 0:
+        guess = input("Take a shot! Guess a letter: ").lower()
+        if guess in word:
+            print("Great shot!")
+            for i, letter in enumerate(word):
+                if letter == guess:
+                    hidden_word[i] = guess
+            print("Your target:", ' '.join(hidden_word))
+            if '_' not in hidden_word:
+                print("Great shot kid! That was one in a million:", word)
+                break
 
 #Homescreen
 """
