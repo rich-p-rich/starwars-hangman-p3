@@ -65,7 +65,11 @@ def play_the_game():
     Function for playing the game
     """
     word = import_word(answers)
-    print("Random word:", word)
+    hidden_word = []
+    for i in range(len(word)):
+        hidden_word.append('_')
+
+    print("Your target:", ' '.join(hidden_word))
 
 #Homescreen
 """
