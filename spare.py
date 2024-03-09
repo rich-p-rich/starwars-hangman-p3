@@ -20,3 +20,18 @@ def how_to_play():
     print('T H E   D E A T H   S T A R \n')
 
     return gameplay
+
+
+    def play_the_game ():
+    """
+    Function for playing the game 
+    """
+    def import_word(answers):
+        word = random_.word(answers)
+        return word
+    
+    answers = ['answers']
+
+    word = import_word(answers)
+    
+    print(word)
