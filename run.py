@@ -64,7 +64,7 @@ def play_the_game():
     """
     Function for playing the game
     """
-    word = import_word(answers)
+    word = import_word(answers).lower()
     hidden_word = []
     guessed_letters = set()
     attempts = 10
