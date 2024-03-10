@@ -69,9 +69,6 @@ def play_the_game():
     guessed_letters = set()
     attempts = 10
 
-    #for i in range(len(word)):
-    #    hidden_word.append('_')
-
     print("Your target:", ' '.join(hidden_word))
 
     while attempts > 0:
@@ -81,10 +78,16 @@ def play_the_game():
             for i, letter in enumerate(word):
                 if letter == guess:
                     hidden_word[i] = guess
+        else: 
+            print ("Just missed! Try again")    
+
             print("Your target:", ' '.join(hidden_word))
             if '_' not in hidden_word:
                 print("Great shot kid! That was one in a million:", word)
                 break
+            if '_' not in hidden_word:
+                print("Great shot kid! That was one in a million:", word)
+        break
 
 #Homescreen
 """
