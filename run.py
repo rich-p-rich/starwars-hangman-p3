@@ -75,19 +75,15 @@ def play_the_game():
         guess = input("Take a shot! Guess a letter: ")
         if guess in word:
             print("Great shot!")
-            for i, letter in enumerate(word):
-                if letter == guess:
-                    hidden_word[i] = guess
-        else: 
-            print ("Just missed! Try again")    
-
-            print("Your target:", ' '.join(hidden_word))
-            if '_' not in hidden_word:
-                print("Great shot kid! That was one in a million:", word)
-                break
-            if '_' not in hidden_word:
-                print("Great shot kid! That was one in a million:", word)
-        break
+        else:
+            print("Just missed! Try again")
+        for i, letter in enumerate(word):
+            if letter == guess:
+                hidden_word[i] = guess
+        print("Your target:", ' '.join(hidden_word))
+        if '_' not in hidden_word:
+            print("Great shot kid! That was one in a million:", word)
+            break
 
 #Homescreen
 """
