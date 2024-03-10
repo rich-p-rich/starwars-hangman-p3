@@ -57,25 +57,25 @@ def import_word(answers):
     """
     Import random word from the answers sheet
     """
-    word = random.choice(answers)
+    word = random.choice(answers).lower().strip()
     return word
 
 def play_the_game():
     """
     Function for playing the game
     """
-    word = import_word(answers).lower()
-    hidden_word = []
+    word = import_word(answers).lower().strip()
+    hidden_word = ['_' if letter != ' ' else ' ' for letter in word]
     guessed_letters = set()
     attempts = 10
 
-    for i in range(len(word)):
-        hidden_word.append('_')
+    #for i in range(len(word)):
+    #    hidden_word.append('_')
 
     print("Your target:", ' '.join(hidden_word))
 
     while attempts > 0:
-        guess = input("Take a shot! Guess a letter: ").lower()
+        guess = input("Take a shot! Guess a letter: ")
         if guess in word:
             print("Great shot!")
             for i, letter in enumerate(word):
