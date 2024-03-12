@@ -75,6 +75,12 @@ def import_word(answers):
     word = random.choice(answers).lower().strip()
     return word
 
+def clue(): 
+    """
+    Function for giving the players clue 1 or clue 2
+    """
+    
+
 def play_the_game():
     """
     Function for playing the game
@@ -82,7 +88,7 @@ def play_the_game():
     word = import_word(answers).lower().strip()
     hidden_word = ['_' if letter != ' ' else ' ' for letter in word]
     guessed_letters = set()
-    if len(word) <= 10:
+    if len(word) <= 6:
         attempts = 6
     else:   
         attempts = 10
@@ -95,10 +101,11 @@ def play_the_game():
     while attempts > 0:
         guess = input("Take a shot! Guess a letter: ")
         if guess in word:
-            myprint("Great shot!")
+           myprint("Great shot!")
         else:
-            myprint("Just missed! Try again: you have", attempts, "shots left")
             attempts -= 1 
+            myprint("Just missed! Try again: you have", attempts, "shots left")
+           
         for i, letter in enumerate(word):
             if letter == guess:
                 hidden_word[i] = guess
