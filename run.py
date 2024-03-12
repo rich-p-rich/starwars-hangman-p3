@@ -72,9 +72,15 @@ def play_the_game():
     word = import_word(answers).lower().strip()
     hidden_word = ['_' if letter != ' ' else ' ' for letter in word]
     guessed_letters = set()
-    attempts = 10
+    if len(word) <= 10:
+        attempts = 6
+    else:   
+        attempts = 10
 
     print("Your target:", ' '.join(hidden_word))
+    print('\n')
+    print("You have",attempts,"shots to save your planet.")
+    print('\n')
 
     while attempts > 0:
         guess = input("Take a shot! Guess a letter: ")
@@ -98,6 +104,7 @@ def play_the_game():
     if attempts: 0
     print("Oh no! The Death Star has won!")
     print("The answer was:", word)
+    print("Don't recognise the answer? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page')")
     input('Press 1 and enter to play the game:  \n')
     ("Starting your attack run ...\n")
     play_the_game()
