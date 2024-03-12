@@ -50,6 +50,11 @@ def how_to_play():
     print('_ H E   _ E _ _ H   _ _ _ R\n')
     print('Clue two: the Original Trilogy.\n')
     print('T H E   D E A T H   S T A R \n')
+    input('Press 1 and enter to play the game:  \n')
+    ("Starting your attack run ...\n")
+    play_the_game()
+
+
 
 #Gameplay section 
 
