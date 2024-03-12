@@ -100,23 +100,28 @@ def play_the_game():
     
     while attempts > 0:
         guess = input("Take a shot! Guess a letter: ")
+        guessed_characters.add(guess)
         if guess in word:
            myprint("Great shot!")
+        elif guess in guessed_characters:
+            myprint("You've already used that shot. Try a different one!")
         else:
             attempts -= 1 
-            myprint("Just missed! Try again: you have", attempts, "shots left")
+            myprint("You missed! Try again: you have", attempts, "shots left")
+            guessed_characters.add(guess)
+            if attempts == 0:
+                break
            
         for i, letter in enumerate(word):
             if letter == guess:
                 hidden_word[i] = guess
-        guessed_characters.add(guess)
         myprint("You have so far tried:", ' '.join(guessed_characters))
         myprint("Your target:", ' '.join(hidden_word))
         if '_' not in hidden_word:
             myprint("Great shot kid! That was one in a million:", word)
             myprint("Don't recognise the answer? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page')")
             input('Press enter to start a new game:  \n')
-            ("Starting your attack run ...\n")
+            ("Starting your attack run .d..\n")
             play_the_game()
             break
 
