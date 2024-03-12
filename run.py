@@ -88,6 +88,9 @@ def play_the_game():
         print("Your target:", ' '.join(hidden_word))
         if '_' not in hidden_word:
             print("Great shot kid! That was one in a million:", word)
+            input('Press 1 and enter to start a new game:  \n')
+            ("Starting your attack run ...\n")
+            play_the_game()
             break
 
 #Homescreen
