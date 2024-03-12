@@ -24,11 +24,11 @@ answers = answers_sheet.col_values(1)[1:]
 clue1 = SHEET.worksheet('clue1')
 clue2 = SHEET.worksheet('clue2')
 
-def myprint(statement):
+def myprint(*args):
     """
     add a left margin to the statements in the Heroku terminal to make it easier to read
     """
-    print("   ",statement)
+    print(' ' ,*args)
 
 def how_to_play():
     """
@@ -37,9 +37,12 @@ def how_to_play():
     
     myprint('How To Play\n')
     myprint('Beat the Death Star and work out the identity of the hidden Star Wars name.\n')
-    myprint('The answer can be a character, a droid, a ship, a vehicle, a type of trooper, a planet, a place or an alien species.\n')
+    myprint('The answer can be a character, a droid, a ship, a vehicle, a type\n') 
+    myprint('of trooper, a planet, a place or an alien species.\n')
     myprint('Example: _ _ _   _ _ _ _ _   _ _ _ _\n')
-    myprint('You have 10 attempts: either guess one letter at a time or guess the whole name.\n')
+    myprint('You have 10 attempts: either guess one letter at a time or\n') 
+    myprint('To guess the whole name, first type ! and press enter. Then enter your guess.\n')
+    myprint('guess the whole name.\n')
     myprint('If you guess a letter and it is right, the letter will appear wherever\n') 
     myprint('it appears.\n')
     myprint('_ _ E   _ E _ _ _   _ _ _ _\n')
@@ -47,8 +50,11 @@ def how_to_play():
     myprint('how many attempts you have left.\n')
     myprint('If you get stuck, you can ask for up to two clues. Each clue will\n') 
     myprint('use up one attempt.\n')
-    myprint('Clue one will tell you whether the name is a character, a ship, and so on.\n')
-    myprint('Clue two will tell you what set of films and / or TV series they are seen most in.\n')
+    myprint('Type ? and hit enter for Clue One.\n') 
+    myprint('Clue One will tell you whether the name is a character, a ship, and so on.\n')
+    myprint('Type ?? and hit enter for Clue Two.\n')
+    myprint('Clue Two will tell you what set of films and / or TV series\n') 
+    myprint('they are seen most in.\n')
     myprint('_ _ E   _ E _ _ _   _ _ _ _\n')
     myprint('Clue one: a place.\n')
     myprint('_ H E   _ E _ _ H   _ _ _ R\n')
@@ -100,7 +106,7 @@ def play_the_game():
         if '_' not in hidden_word:
             myprint("Great shot kid! That was one in a million:", word)
             myprint("Don't recognise the answer? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page')")
-            input('Press 1 and enter to start a new game:  \n')
+            input('Press enter to start a new game:  \n')
             ("Starting your attack run ...\n")
             play_the_game()
             break
@@ -109,7 +115,7 @@ def play_the_game():
     myprint("Oh no! The Death Star has won!")
     myprint("The answer was:", word)
     myprint("Don't recognise the answer? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page')")
-    input('Press 1 and enter to play the game:  \n')
+    input('Press enter to play the game:  \n')
     ("Starting your attack run ...\n")
     play_the_game()
 
@@ -119,14 +125,15 @@ Set up homescreen
 The user chooses to play the game or read the gameplay instructions 
 """
 def display_homescreen():
-    myprint('Welcome to Starwars Hangman!')
-    myprint('Save your homeworld by guessing the missing name before the Death Star is in range!\n')
+    myprint('Welcome to Starwars Hangman!\n')
+    myprint('Save your homeworld by guessing the missing name before\n') 
+    myprint('the Death Star is in range!\n')
     myprint('Choose your option:\n')
     option1 = 'Play the game: press "1" and enter.\n'
     option2 = 'How to play: press "2" and enter.\n'
     myprint(option1)
     myprint(option2)
-    option = input("Enter your option:  ")
+    option = input("  Enter your option:  ")
 
     if option == '1':
         myprint("Starting your attack run ...\n")
