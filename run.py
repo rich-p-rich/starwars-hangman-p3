@@ -87,7 +87,7 @@ def play_the_game():
     """
     word = import_word(answers).lower().strip()
     hidden_word = ['_' if letter != ' ' else ' ' for letter in word]
-    guessed_letters = set()
+    guessed_characters = set()
     if len(word) <= 6:
         attempts = 6
     else:   
@@ -97,7 +97,7 @@ def play_the_game():
     myprint('\n')
     myprint("You have",attempts,"shots to save your planet.")
     myprint('\n')
-
+    
     while attempts > 0:
         guess = input("Take a shot! Guess a letter: ")
         if guess in word:
@@ -109,6 +109,8 @@ def play_the_game():
         for i, letter in enumerate(word):
             if letter == guess:
                 hidden_word[i] = guess
+        guessed_characters.add(guess)
+        myprint("You have so far tried:", ' '.join(guessed_characters))
         myprint("Your target:", ' '.join(hidden_word))
         if '_' not in hidden_word:
             myprint("Great shot kid! That was one in a million:", word)
