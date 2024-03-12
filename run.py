@@ -81,7 +81,8 @@ def play_the_game():
         if guess in word:
             print("Great shot!")
         else:
-            print("Just missed! Try again")
+            print("Just missed! Try again: you have", attempts, "shots left")
+            attempts -= 1 
         for i, letter in enumerate(word):
             if letter == guess:
                 hidden_word[i] = guess
@@ -93,6 +94,13 @@ def play_the_game():
             ("Starting your attack run ...\n")
             play_the_game()
             break
+
+    if attempts: 0
+    print("Oh no! The Death Star has won!")
+    print("The answer was:", word)
+    input('Press 1 and enter to play the game:  \n')
+    ("Starting your attack run ...\n")
+    play_the_game()
 
 #Homescreen
 """
