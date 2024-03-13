@@ -103,6 +103,8 @@ def play_the_game():
         guess = input("Take a shot! Guess a letter: ").lower()
         if guess in guessed_characters:
             myprint("You've taken that shot already - try something else!")
+        else:
+            guessed_characters.add(guess)
         
         if guess in word:
             myprint("Great shot!")
@@ -124,7 +126,7 @@ def play_the_game():
             play_the_game()
             break
 
-    if attempts: 0
+    if attempts == 0
     myprint("Oh no! The Death Star has won!")
     myprint("The answer was:", word)
     myprint("Don't recognise the answer? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page')")
