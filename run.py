@@ -101,6 +101,9 @@ def play_the_game():
 
     while attempts > 0:
         guess = input("Take a shot! Guess a letter: ").lower()
+        if len(guess) != 1:  #the player should only enter 1 character at a time unless they want to guess the whole thing
+            myprint("Only one character at a time! Or press ! and then 'enter' to guess the whole answer")
+
         if guess in guessed_characters:
             myprint("You've taken that shot already - try something else!")
         else:
@@ -126,10 +129,10 @@ def play_the_game():
             play_the_game()
             break
 
-    if attempts == 0
-    myprint("Oh no! The Death Star has won!")
-    myprint("The answer was:", word)
-    myprint("Don't recognise the answer? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page')")
+    if attempts == 0:
+        myprint("Oh no! The Death Star has won!")
+        myprint("The answer was:", word)
+        myprint("Don't recognise the answer? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page')")
     input('Press enter to play the game:  \n')
     ("Starting your attack run ...\n")
     play_the_game()
