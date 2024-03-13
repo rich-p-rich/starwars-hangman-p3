@@ -87,8 +87,9 @@ def play_the_game():
     """
     word = import_word(answers).lower().strip()
     hidden_word = ['_' if letter != ' ' else ' ' for letter in word]
-    guessed_letters = set()
-    if len(word) <= 10:
+    guessed_characters = set() #keeps track of all guesses in case user repeats a guess 
+    wrong_guesses = set() #keeps track of wrong guesses to display them to the user
+    if len(word) <= 10:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
         attempts = 6
     else:   
         attempts = 10
@@ -99,16 +100,21 @@ def play_the_game():
     myprint('\n')
 
     while attempts > 0:
-        guess = input("Take a shot! Guess a letter: ")
+        guess = input("Take a shot! Guess a letter: ").lower()
+        if guess in guessed_characters:
+            myprint("You've taken that shot already - try something else!")
+        
         if guess in word:
             myprint("Great shot!")
+            for i, letter in enumerate(word):
+                if letter == guess:
+                    hidden_word[i] = guess
         else:
             attempts -= 1 
+            wrong_guesses.add(guess)
             myprint("Just missed! Try again: you have", attempts, "shots left")
+            myprint("Missed shots:", ' '.join(sorted(wrong_guesses))) #displays wrong guesses
             
-        for i, letter in enumerate(word):
-            if letter == guess:
-                hidden_word[i] = guess
         myprint("Your target:", ' '.join(hidden_word))
         if '_' not in hidden_word:
             myprint("Great shot kid! That was one in a million:", word)
