@@ -91,7 +91,7 @@ def play_the_game():
     guessed_characters = set() #keeps track of all guesses in case user repeats a guess 
     wrong_guesses = set() #keeps track of wrong guesses to display them to the user
 
-    if len(word) <= 10:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
+    if len(word) <= 8:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
         attempts = 6
     else:   
         attempts = 10
@@ -104,9 +104,23 @@ def play_the_game():
     while attempts > 0:
         guess = input("Take a shot! Enter a letter or number, or enter ! to guess the whole word: ").lower()
 
+        if guess.startswith('!'):
+            guess = input("Guess the whole answer: ").lower()
+            if guess == word:  
+                myprint("Great shot kid! That was one in a million:", word)
+                myprint("Want to find out more? Look it up on Wookieepedia: https://starwars.fandom.com/wiki/Main_Page")
+                input('Press enter to start a new game:  \n')
+                ("Starting your attack run ...\n")
+                play_the_game()
+                break
+            else:
+                attempts -= 1
+                myprint("Missed! Try again: you have", attempts, "shots left \n")
+                continue
+
         if len(guess) > 1:  #check to see that the player has only entered 1 character
             myprint("Only one character at a time!\n")
-            myprint("Or press ! and then 'enter' to guess the whole answer\n")
+            myprint("Or enter an ! and guess the whole answer.\n")
             continue
         
         if guess in guessed_characters: #check to see if the user is repeating a guess and remind them if they are 
