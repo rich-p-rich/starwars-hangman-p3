@@ -1,6 +1,5 @@
 import gspread
 import random
-import pep-8
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -25,38 +24,36 @@ answers = answers_sheet.col_values(1)[1:]
 clue1 = SHEET.worksheet('clue1')
 clue2 = SHEET.worksheet('clue2')
 
-
 def myprint(*args):
     """
-    add a left margin to the statements in
-    the Heroku terminal make it easier to read
+    add a left margin to the statements in the Heroku terminal to make it easier to read
     """
-    print(' ', *args)
-
+    print(' ' ,*args)
 
 def how_to_play():
     """
     Gameplay explanation
     """
+    
     myprint('How To Play\n')
     myprint('Beat the Death Star and work out the identity of the hidden Star Wars name.\n')
-    myprint('The answer can be a character, a droid, a ship, a vehicle, a type\n')
+    myprint('The answer can be a character, a droid, a ship, a vehicle, a type\n') 
     myprint('of trooper, a planet, a place or an alien species.\n')
     myprint('Example: _ _ _   _ _ _ _ _   _ _ _ _\n')
-    myprint('You have 10 attempts: either guess one letter at a time or\n')
+    myprint('You have 10 attempts: either guess one letter at a time or\n') 
     myprint('To guess the whole name, first type ! and press enter. Then enter your guess.\n')
     myprint('guess the whole name.\n')
-    myprint('If you guess a letter and it is right, the letter will appear wherever\n')
+    myprint('If you guess a letter and it is right, the letter will appear wherever\n') 
     myprint('it appears.\n')
     myprint('_ _ E   _ E _ _ _   _ _ _ _\n')
-    myprint('If your guess is wrong, the game will simply continue depending on\n')
+    myprint('If your guess is wrong, the game will simply continue depending on\n') 
     myprint('how many attempts you have left.\n')
-    myprint('If you get stuck, you can ask for up to two clues. Each clue will\n')
+    myprint('If you get stuck, you can ask for up to two clues. Each clue will\n') 
     myprint('use up one attempt.\n')
-    myprint('Type ? and hit enter for Clue One.\n')
+    myprint('Type ? and hit enter for Clue One.\n') 
     myprint('Clue One will tell you whether the name is a character, a ship, and so on.\n')
     myprint('Type ?? and hit enter for Clue Two.\n')
-    myprint('Clue Two will tell you what set of films and / or TV series\n')
+    myprint('Clue Two will tell you what set of films and / or TV series\n') 
     myprint('they are seen most in.\n')
     myprint('_ _ E   _ E _ _ _   _ _ _ _\n')
     myprint('Clue one: a place.\n')
@@ -67,6 +64,9 @@ def how_to_play():
     ("Starting your attack run ...\n")
     play_the_game()
 
+
+
+#Gameplay section 
 
 def import_word(answers):
     """
@@ -80,7 +80,7 @@ def clue():
     """
     Function for giving the players clue 1 or clue 2
     """
-
+    
 
 def play_the_game():
     """
@@ -88,46 +88,44 @@ def play_the_game():
     """
     word = import_word(answers).lower().strip()
     hidden_word = ['_' if letter != ' ' else ' ' for letter in word]
-    guessed_characters = set()
-    wrong_guesses = set()
+    guessed_characters = set() #keeps track of all guesses in case user repeats a guess 
+    wrong_guesses = set() #keeps track of wrong guesses to display them to the user
 
-    if len(word) <= 10:
+    if len(word) <= 10:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
         attempts = 6
-    else:
+    else:   
         attempts = 10
 
+    myprint("Your target:", ' '.join(hidden_word))
+    myprint('\n')
+    myprint("You have",attempts,"shots to save your planet.")
+    myprint('\n')
 
-myprint("Your target:", ' '.join(hidden_word))
-myprint('\n')
-myprint("You have", attempts, "shots to save your planet.")
-myprint('\n')
+    while attempts > 0:
+        guess = input("Take a shot! Enter a letter or number, or enter ! to guess the whole word: ").lower()
 
-while attempts > 0:
-    guess = input("Take a shot! Enter a letter or number, or enter ! to guess the whole word: ").lower()
-
-    if len(guess) > 1:
-        myprint("Only one character at a time!\n")
-        myprint("Or press ! and then 'enter' to guess the whole answer\n")
-        continue
-
-    if guess in guessed_characters:
-        myprint("You've taken that shot already - try something else!")
-        continue
+        if len(guess) > 1:  #check to see that the player has only entered 1 character
+            myprint("Only one character at a time!\n")
+            myprint("Or press ! and then 'enter' to guess the whole answer\n")
+            continue
+        
+        if guess in guessed_characters: #check to see if the user is repeating a guess and remind them if they are 
+            myprint("You've taken that shot already - try something else!")  #remind the player in case they repeat a guess 
+            continue
 
         guessed_characters.add(guess)
-
-    if guess in word:
-        myprint("Great shot!")
-        for i, letter in enumerate(word):
-            if letter == guess:
-                hidden_word[i] = guess
-
-    else:
-        attempts -= 1
-        wrong_guesses.add(guess)
-        myprint("Missed! Try again: you have", attempts, "shots left")
-        myprint("Missed shots:", ' '.join(sorted(wrong_guesses)))
-
+      
+        if guess in word:
+            myprint("Great shot!")
+            for i, letter in enumerate(word):
+                if letter == guess:
+                    hidden_word[i] = guess
+        else:
+            attempts -= 1 
+            wrong_guesses.add(guess)
+            myprint("Missed! Try again: you have", attempts, "shots left")
+            myprint("Missed shots:", ' '.join(sorted(wrong_guesses))) #displays wrong guesses
+            
         myprint("Your target:", ' '.join(hidden_word))
         if '_' not in hidden_word:
             myprint("Great shot kid! That was one in a million:", word)
@@ -146,15 +144,14 @@ while attempts > 0:
     play_the_game()
 
 
+#Homescreen
 """
-Set up homescreen
-The user chooses to play the game or read the gameplay instructions
+Set up homescreen 
+The user chooses to play the game or read the gameplay instructions 
 """
-
-
 def display_homescreen():
     myprint('Welcome to Starwars Hangman!\n')
-    myprint('Save your homeworld by guessing the missing name before\n')
+    myprint('Save your homeworld by guessing the missing name before\n') 
     myprint('the Death Star is in range!\n')
     myprint('Choose your option:\n')
     option1 = 'Play the game: press "1" and enter.\n'
@@ -168,9 +165,8 @@ def display_homescreen():
         play_the_game()
     elif option == '2':
         myprint("Loading up the Death Star plans now ...\n")
-        how_to_play()
+        how_to_play() 
     else:
         myprint("No target found: please enter 1 or 2.\n")
-
 
 display_homescreen()
