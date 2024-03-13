@@ -87,8 +87,8 @@ def play_the_game():
     """
     word = import_word(answers).lower().strip()
     hidden_word = ['_' if letter != ' ' else ' ' for letter in word]
-    guessed_characters = set()
-    if len(word) <= 6:
+    guessed_letters = set()
+    if len(word) <= 10:
         attempts = 6
     else:   
         attempts = 10
@@ -97,31 +97,24 @@ def play_the_game():
     myprint('\n')
     myprint("You have",attempts,"shots to save your planet.")
     myprint('\n')
-    
+
     while attempts > 0:
         guess = input("Take a shot! Guess a letter: ")
-        guessed_characters.add(guess)
         if guess in word:
-           myprint("Great shot!")
-        elif guess in guessed_characters:
-            myprint("You've already used that shot. Try a different one!")
+            myprint("Great shot!")
         else:
             attempts -= 1 
-            myprint("You missed! Try again: you have", attempts, "shots left")
-            guessed_characters.add(guess)
-            if attempts == 0:
-                break
-           
+            myprint("Just missed! Try again: you have", attempts, "shots left")
+            
         for i, letter in enumerate(word):
             if letter == guess:
                 hidden_word[i] = guess
-        myprint("You have so far tried:", ' '.join(guessed_characters))
         myprint("Your target:", ' '.join(hidden_word))
         if '_' not in hidden_word:
             myprint("Great shot kid! That was one in a million:", word)
             myprint("Don't recognise the answer? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page')")
             input('Press enter to start a new game:  \n')
-            ("Starting your attack run .d..\n")
+            ("Starting your attack run ...\n")
             play_the_game()
             break
 
@@ -132,6 +125,7 @@ def play_the_game():
     input('Press enter to play the game:  \n')
     ("Starting your attack run ...\n")
     play_the_game()
+
 
 #Homescreen
 """
