@@ -101,18 +101,19 @@ def play_the_game():
     myprint('\n')
 
     while attempts > 0:
-        guess = input("Take a shot! Guess a letter: ").lower()
+        guess = input("Take a shot! Enter a letter or number, or enter ! to guess the whole word: ").lower()
 
-        if len(guess) != 1:  #the player should only enter 1 character at a time unless they want to guess the whole thing
-            myprint("Only one character at a time! Or press ! and then 'enter' to guess the whole answer")
+        if len(guess) > 1:  #check to see that the player has only entered 1 character
+            myprint("Only one character at a time!\n")
+            myprint("Or press ! and then 'enter' to guess the whole answer\n")
             continue
         
-        if guess in guessed_characters:
-            myprint("You've taken that shot already - try something else!")
+        if guess in guessed_characters: #check to see if the user is repeating a guess and remind them if they are 
+            myprint("You've taken that shot already - try something else!")  #remind the player in case they repeat a guess 
             continue
 
         guessed_characters.add(guess)
-                
+      
         if guess in word:
             myprint("Great shot!")
             for i, letter in enumerate(word):
@@ -121,7 +122,7 @@ def play_the_game():
         else:
             attempts -= 1 
             wrong_guesses.add(guess)
-            myprint("Just missed! Try again: you have", attempts, "shots left")
+            myprint("Missed! Try again: you have", attempts, "shots left")
             myprint("Missed shots:", ' '.join(sorted(wrong_guesses))) #displays wrong guesses
             
         myprint("Your target:", ' '.join(hidden_word))
