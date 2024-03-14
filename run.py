@@ -102,7 +102,7 @@ def play_the_game():
     myprint('\n')
 
     while attempts > 0:
-        guess = input("Take a shot! Enter a letter or number, or enter ! to guess the whole word: ").lower()
+        guess = input("Take a shot: ").lower()
 
         if guess.startswith('!'):
             guess = input("Guess the whole answer: ").lower()
@@ -117,7 +117,17 @@ def play_the_game():
                 attempts -= 1
                 myprint("Missed! Try again: you have", attempts, "shots left \n")
                 continue
+        
+        if guess.startswith('?') and len(guess) == 1:
+            myprint("Clue 1: the answer is a \n")
+            attempts -= 1 
+            continue
 
+        if guess.startswith('??') and len(guess) == 2:
+            myprint("Clue 2: the answer appears mostly in \n")
+            attempts -= 1 
+            continue
+        
         if len(guess) > 1:  #check to see that the player has only entered 1 character
             myprint("Only one character at a time!\n")
             myprint("Or enter an ! and guess the whole answer.\n")
@@ -143,7 +153,8 @@ def play_the_game():
         myprint("Your target:", ' '.join(hidden_word))
         if '_' not in hidden_word:
             myprint("Great shot kid! That was one in a million:", word)
-            myprint("Don't recognise the answer? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page')")
+            myprint("Want to find out more?\n") 
+            myprint("Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page")
             input('Press enter to start a new game:  \n')
             ("Starting your attack run ...\n")
             play_the_game()
@@ -152,7 +163,8 @@ def play_the_game():
     if attempts == 0:
         myprint("Oh no! The Death Star has won!")
         myprint("The answer was:", word)
-        myprint("Don't recognise the answer? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page')")
+        myprint("Don't recognise the answer?\n")
+        myprint("Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page")
     input('Press enter to play the game:  \n')
     ("Starting your attack run ...\n")
     play_the_game()
