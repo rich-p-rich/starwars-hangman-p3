@@ -19,10 +19,10 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('starwars_hangman')
 
-answers_sheet = SHEET.worksheet('answers')
-answers = answers_sheet.col_values(1)[1:]
-clue1 = SHEET.worksheet('clue1')
-clue2 = SHEET.worksheet('clue2')
+sw_hangman_answers = SHEET.worksheet('answers')
+answers = sw_hangman_answers.col_values(1)[1:] 
+clue1 = sw_hangman_answers
+clue2 = sw_hangman_answers
 
 def myprint(*args):
     """
@@ -76,11 +76,25 @@ def import_word(answers):
     return word
 
 
-def clue():
+def clue1(answer):
     """
-    Function for giving the players clue 1 or clue 2
+    Function for giving the players clue 1
     """
-    
+    clue1_data = clue1.get_all_values()
+    print("Clue 1 data:", clue1_data) 
+    for row in clue1_data:
+        if row[0] == answer:
+            return row[1]  
+
+def clue2(answer):
+    """
+    Function for giving the players clue 2
+    """
+    clue2_data = clue2.get_all_values()
+    print("Clue 2 data:", clue2_data) 
+    for row in clue2_data:
+        if row[0] == answer:
+            return row[2]  
 
 def play_the_game():
     """
@@ -95,7 +109,7 @@ def play_the_game():
         attempts = 6
     else:   
         attempts = 10
-
+        
     myprint("Your target:", ' '.join(hidden_word))
     myprint('\n')
     myprint("You have",attempts,"shots to save your planet.")
@@ -119,7 +133,7 @@ def play_the_game():
                 continue
         
         if guess.startswith('?') and len(guess) == 1:
-            myprint("Clue 1: the answer is a \n")
+            myprint("Clue 1: the answer is a", clue1)
             attempts -= 1 
             continue
 

@@ -12,3 +12,9 @@
                 myprint("Missed! Try again: you have", attempts, "shots left")
                 guessed_characters.add(guess)
                 continue
+
+
+answers_sheet = SHEET.worksheet('answers')
+answers = answers_sheet.col_values(1)[1:]
+clue1 = SHEET.worksheet('clue1')
+clue2 = SHEET.worksheet('clue2')
