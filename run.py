@@ -193,20 +193,22 @@ def display_homescreen():
     myprint('Welcome to Starwars Hangman!\n')
     myprint('Save your homeworld by guessing the missing name before\n') 
     myprint('the Death Star is in range!\n')
-    myprint('Choose your option:\n')
-    option1 = 'Play the game: press "1" and enter.\n'
-    option2 = 'How to play: press "2" and enter.\n'
-    myprint(option1)
-    myprint(option2)
-    option = input("  Enter your option:  ")
 
-    if option == '1':
-        myprint("Starting your attack run ...\n")
-        play_the_game()
-    elif option == '2':
-        myprint("Loading up the Death Star plans now ...\n")
-        how_to_play() 
-    else:
-        myprint("No target found: please enter 1 or 2.\n")
+    while True:
+        myprint('Choose your option:\n')
+        option1 = 'Play the game: press "1" and enter.\n'
+        option2 = 'How to play: press "2" and enter.\n'
+        myprint(option1)
+        myprint(option2)
+        option = input("  Enter your option:  ")
+
+        if option == '1':
+            myprint("Starting your attack run ...\n")
+            play_the_game()
+        elif option == '2':
+            myprint("Loading up the Death Star plans now ...\n")
+            how_to_play() 
+        else:
+            myprint("No target found: please enter 1 or 2.\n")
 
 display_homescreen()
