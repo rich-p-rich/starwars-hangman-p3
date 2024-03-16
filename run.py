@@ -101,11 +101,12 @@ def play_the_game():
     Function for playing the game
     """
     word = import_word(answers).lower().strip()
-    hidden_word = ['_' if letter != ' ' else ' ' for letter in word]
+    hidden_word = [letter if letter in (" ", "'", "-") else '_' for letter in word]
     guessed_characters = set() #keeps track of all guesses in case user repeats a guess 
     wrong_guesses = set() #keeps track of wrong guesses to display them to the user
+    invalid_characters = [' ', '#', '*', '<', '>', ':', ';', '(', ')', '+', '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
 
-    if len(word) <= 8:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
+    if len(word) <= 7:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
         attempts = 6
     else:   
         attempts = 10
@@ -134,13 +135,17 @@ def play_the_game():
         
         if guess.startswith('?') and len(guess) == 1:
             myprint("Clue 1: the answer is a", clue1)
-            attempts -= 1 
+            attempts -= 1
             continue
 
         if guess.startswith('??') and len(guess) == 2:
             myprint("Clue 2: the answer appears mostly in \n")
-            attempts -= 1 
+            attempts -= 1
             continue
+
+        if guess.startswith(tuple(invalid_characters)):
+            myprint("Invalid input! Stay on target!")
+            continue 
         
         if len(guess) > 1:  #check to see that the player has only entered 1 character
             myprint("Only one character at a time!\n")

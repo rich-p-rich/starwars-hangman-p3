@@ -18,3 +18,5 @@ answers_sheet = SHEET.worksheet('answers')
 answers = answers_sheet.col_values(1)[1:]
 clue1 = SHEET.worksheet('clue1')
 clue2 = SHEET.worksheet('clue2')
+
+
