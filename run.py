@@ -108,6 +108,7 @@ def play_the_game():
     guessed_characters = set() #keeps track of all guesses in case user repeats a guess
     wrong_guesses = set() #keeps track of wrong guesses to display them to the user
     invalid_characters = [' ', '#', '*', '<', '>', ':', ';', '(', ')', '+', '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
+    clue1_used = False
 
     if len(word) <= 7:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
         attempts = 6
@@ -140,13 +141,18 @@ def play_the_game():
             attempts -= 1
             myprint("Clue 1: the answer is a", get_clue1(word))
             myprint("You have", attempts, "shots left \n")
+            clue1_used = True
             continue
 
         if guess.startswith('??') and len(guess) == 2:
-            attempts -= 1
-            myprint("Clue 2: the answer appears mostly in", get_clue2(word))
-            myprint("You have", attempts, "shots left \n")
-            continue
+                if clue1_used == True:
+                    attempts -= 1
+                    myprint("Clue 2: the answer appears mostly in", get_clue2(word))
+                    myprint("You have", attempts, "shots left \n")
+                 
+                elif clue1_used == False:
+                    myprint("Try Clue 1 first!")
+                    myprint("Tap ? and enter for Clue 1.")
 
         if guess.startswith(tuple(invalid_characters)):
             myprint("Invalid input! Stay on target!")
@@ -223,7 +229,7 @@ def display_homescreen():
             play_the_game()
         elif option == '2':
             myprint("Loading up the Death Star plans now ...\n")
-            clear_terminal() 
+            clear_terminal()
             how_to_play()
         else:
             myprint("No target found: please enter 1 or 2.\n")
