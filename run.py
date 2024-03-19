@@ -199,6 +199,12 @@ def play_the_game():
 Set up homescreen 
 The user chooses to play the game or read the gameplay instructions 
 """
+def clear_terminal ():
+    if os.name == 'nt':  # Windows
+        os.system('cls')
+    else:  # Unix/Linux/MacOS
+        os.system('clear')
+
 def display_homescreen():
     myprint('Welcome to Starwars Hangman!\n')
     myprint('Save your homeworld by guessing the missing name before\n') 
@@ -217,7 +223,7 @@ def display_homescreen():
             play_the_game()
         elif option == '2':
             myprint("Loading up the Death Star plans now ...\n")
-            os.system('cls')
+            clear_terminal() 
             how_to_play()
         else:
             myprint("No target found: please enter 1 or 2.\n")
