@@ -136,13 +136,15 @@ def play_the_game():
                 continue
         
         if guess.startswith('?') and len(guess) == 1:
-            myprint("Clue 1: the answer is a", get_clue1(word))
             attempts -= 1
+            myprint("Clue 1: the answer is a", get_clue1(word))
+            myprint("You have", attempts, "shots left \n")
             continue
 
         if guess.startswith('??') and len(guess) == 2:
-            myprint("Clue 2: the answer appears mostly in", get_clue2(word))
             attempts -= 1
+            myprint("Clue 2: the answer appears mostly in", get_clue2(word))
+            myprint("You have", attempts, "shots left \n")
             continue
 
         if guess.startswith(tuple(invalid_characters)):
