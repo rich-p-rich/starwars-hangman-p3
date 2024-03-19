@@ -110,7 +110,7 @@ def play_the_game():
     invalid_characters = [' ', '#', '*', '<', '>', ':', ';', '(', ')', '+', '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
     clue1_used = False
 
-    if len(word) <= 7:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
+    if len(word) <= 6:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
         attempts = 6
     else:
         attempts = 10
@@ -159,7 +159,7 @@ def play_the_game():
                     myprint("Tap ? and enter for Clue 1.")
                 continue
 
-        if len(guess) > 1: #and not guess.startswith('??'):  check to see that the player has only entered 1 character
+        if len(guess) > 1: #check to see that the player has only entered 1 character
             myprint("Only one character at a time!\n")
             myprint("Or enter an ! and guess the whole answer.\n")
             continue
