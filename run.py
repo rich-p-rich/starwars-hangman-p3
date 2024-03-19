@@ -28,9 +28,11 @@ clue2 = sw_hangman_answers.col_values(3)[1:]
 
 def myprint(*args):
     """
-    add a left margin to the statements in the Heroku terminal to make it easier to read
+    add a left margin to the statements in the Heroku terminal
+    to make it easier to read
     """
-    myprint = print(' ' , *args)
+    myprint = print(' ', *args)
+
 
 def how_to_play():
     """
@@ -38,22 +40,18 @@ def how_to_play():
     """
 
     myprint('How To Play\n')
-    myprint('Beat the Death Star and work out the identity of the hidden Star Wars name.\n')
-    myprint('The answer can be a character, a droid, a ship, a vehicle, a type\n')
-    myprint('of trooper, a planet, a place or an alien species.\n')
+    myprint('The answer can be a character, droid, ship, vehicle,\n')
+    myprint('type of trooper, creature, planet, place or an alien species.\n')
     myprint('Example: _ _ _   _ _ _ _ _   _ _ _ _\n')
     myprint('You have 10 attempts: either guess one letter at a time or\n')
-    myprint('To guess the whole name, first type ! and press enter. Then enter your guess.\n')
-    myprint('guess the whole name.\n')
-    myprint('If you guess a letter and it is right, the letter will appear wherever\n')
-    myprint('it appears.\n')
+    myprint('If your guess is right, the letter appears as appropriate\n')
     myprint('_ _ E   _ E _ _ _   _ _ _ _\n')
-    myprint('If your guess is wrong, the game will simply continue depending on\n')
+    myprint('If your guess is wrong, the game continues depending on\n')
     myprint('how many attempts you have left.\n')
-    myprint('If you get stuck, you can ask for up to two clues. Each clue will\n')
+    myprint('You can ask for up to two clues. Each clue will\n')
     myprint('use up one attempt.\n')
     myprint('Type ? and hit enter for Clue One.\n')
-    myprint('Clue One will tell you whether the name is a character, a ship, and so on.\n')
+    myprint('Clue 1 tells you what the target is, eg a character or a ship.\n')
     myprint('Type ?? and hit enter for Clue Two.\n')
     myprint('Clue Two will tell you what set of films and / or TV series\n')
     myprint('they are seen most in.\n')
@@ -61,13 +59,19 @@ def how_to_play():
     myprint('Clue one: a place.\n')
     myprint('_ H E   _ E _ _ H   _ _ _ R\n')
     myprint('Clue two: the Original Trilogy.\n')
+    myprint('To guess the whole name: type ! and press enter.\n')
+    myprint('Then enter your guess.\n')
+    myprint('guess the whole name.\n')
     myprint('T H E   D E A T H   S T A R \n')
     input('Press enter to play the game:  \n')
     ("Starting your attack run ...\n")
     play_the_game()
 
 
-#Gameplay section 
+"""
+Gameplay section
+"""
+
 
 def import_word(answers):
     """
@@ -87,6 +91,7 @@ def get_clue1(answer):
         if word == answer:
             return row[1]
 
+
 def get_clue2(answer):
     """
     Function for giving the players clue 2
@@ -105,19 +110,23 @@ def play_the_game():
     """
     word = import_word(answers).lower().strip()
     hidden_word = [letter if letter in (" ", "'", "-") else '_' for letter in word]
-    guessed_characters = set() #keeps track of all guesses in case user repeats a guess
-    wrong_guesses = set() #keeps track of wrong guesses to display them to the user
+    guessed_characters = set()  # monitors guesses in case user repeats a guess
+    wrong_guesses = set()  # monitors wrong guesses to display them to the user
     invalid_characters = [' ', '#', '*', '<', '>', ':', ';', '(', ')', '+', '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
     clue1_used = False
 
-    if len(word) <= 6:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
+    """
+    Set the nr of wrong guesses the user is allowed
+    This is based on total nr of characters in the target
+    """
+    if len(word) <= 6:
         attempts = 6
     else:
         attempts = 10
-        
+
     myprint("Your target:", ' '.join(hidden_word))
     myprint('\n')
-    myprint("You have",attempts,"shots to save your planet.")
+    myprint("You have", attempts, "shots to save your planet.")
     myprint('\n')
 
     while attempts > 0:
@@ -131,16 +140,21 @@ def play_the_game():
             guess = input("Guess the whole answer: ").lower()
             if guess == word:
                 myprint("Great shot kid! That was one in a million:", word)
-                myprint("Want to find out more? Look it up on Wookieepedia: https://starwars.fandom.com/wiki/Main_Page")
+                myprint("Want to find out more?\n")
+                myprint("Look it up on Wookieepedia:\n")
+                myprint("https://starwars.fandom.com/wiki/Main_Page\n")
                 input('Press enter to start a new game:  \n')
                 ("Starting your attack run ...\n")
                 play_the_game()
                 break
             else:
                 attempts -= 1
-                myprint("Missed! Try again: you have", attempts, "shots left \n")
+                myprint("Missed! Try again:", attempts, "shots left \n")
                 continue
-        
+
+        """
+        Conditions for using the clues
+        """
         if guess.startswith('?') and len(guess) == 1:
             attempts -= 1
             myprint("Clue 1: the answer is a", get_clue1(word))
@@ -149,27 +163,39 @@ def play_the_game():
             continue
 
         if guess.startswith('??') and len(guess) == 2:
-                if clue1_used == True:
-                    attempts -= 1
-                    myprint("Clue 2: the answer appears mostly in", get_clue2(word))
-                    myprint("You have", attempts, "shots left \n")
-                    continue
-                elif clue1_used == False:
-                    myprint("Try Clue 1 first!")
-                    myprint("Tap ? and enter for Clue 1.")
+            if clue1_used == True:
+                attempts -= 1
+                myprint("Clue 2: they mostly appear in", get_clue2(word))
+                myprint("You have", attempts, "shots left \n")
+                continue
+            elif clue1_used == False:
+                myprint("Try Clue 1 first!")
+                myprint("Tap ? and enter for Clue 1.")
                 continue
 
-        if len(guess) > 1: #check to see that the player has only entered 1 character
+        """
+        Ensure the user enters only 1 charaacter
+        except for ?? and whole answer guesses
+        """
+        if len(guess) > 1:
             myprint("Only one character at a time!\n")
             myprint("Or enter an ! and guess the whole answer.\n")
             continue
-        
-        if guess in guessed_characters: #check to see if the user is repeating a guess and remind them if so
-            myprint("You've taken that shot already - try something else!")  #remind the player in case they repeat a guess
+
+        """
+        Checks if the user is repeating a guess
+        and remind them if they are
+        """
+        if guess in guessed_characters:
+            myprint("You've taken that shot already - try something else!")
             continue
 
         guessed_characters.add(guess)
-      
+
+        """
+        Checks guess against answer, react accordingly
+        Stores wrong guesses and displays them to player
+        """
         if guess in word:
             myprint("Great shot!")
             for i, letter in enumerate(word):
@@ -179,13 +205,14 @@ def play_the_game():
             attempts -= 1
             wrong_guesses.add(guess)
             myprint("Missed! Try again: you have", attempts, "shots left")
-            myprint("Missed shots:", ' '.join(sorted(wrong_guesses))) #displays wrong guesses
-            
+            myprint("Missed shots:", ' '.join(sorted(wrong_guesses)))
+
         myprint("Your target:", ' '.join(hidden_word))
         if '_' not in hidden_word:
             myprint("Great shot kid! That was one in a million:", word)
-            myprint("Want to find out more?\n") 
-            myprint("Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page")
+            myprint("Want to find out more?\n")
+            myprint("Look it up on Wookipedia:\n")
+            myprint("https://starwars.fandom.com/wiki/Main_Page\n")
             input('Press enter to start a new game:  \n')
             ("Starting your attack run ...\n")
             play_the_game()
@@ -195,26 +222,29 @@ def play_the_game():
         myprint("Oh no! The Death Star has won!")
         myprint("The answer was:", word)
         myprint("Don't recognise the answer?\n")
-        myprint("Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page")
+        myprint("Look it up on Wookipedia:\n")
+        myprint("https://starwars.fandom.com/wiki/Main_Page\n")
     input('Press enter to play the game:  \n')
     ("Starting your attack run ...\n")
     play_the_game()
 
 
-#Homescreen
 """
-Set up homescreen 
-The user chooses to play the game or read the gameplay instructions 
+Set up homescreen
+The user chooses to play the game or read the gameplay instructions
 """
-def clear_terminal ():
+
+
+def clear_terminal():
     if os.name == 'nt':  # Windows
         os.system('cls')
     else:  # Unix/Linux/MacOS
         os.system('clear')
 
+
 def display_homescreen():
     myprint('Welcome to Starwars Hangman!\n')
-    myprint('Save your homeworld by guessing the missing name before\n') 
+    myprint('Save your homeworld by guessing the missing name before\n')
     myprint('the Death Star is in range!\n')
 
     while True:
@@ -234,5 +264,6 @@ def display_homescreen():
             how_to_play()
         else:
             myprint("No target found: please enter 1 or 2.\n")
+
 
 display_homescreen()
