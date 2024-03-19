@@ -123,6 +123,10 @@ def play_the_game():
     while attempts > 0:
         guess = input("Take a shot: ").lower()
 
+        if guess.startswith(tuple(invalid_characters)):
+            myprint("Invalid input! Stay on target!")
+            continue
+
         if guess.startswith('!'):
             guess = input("Guess the whole answer: ").lower()
             if guess == word:
@@ -149,16 +153,13 @@ def play_the_game():
                     attempts -= 1
                     myprint("Clue 2: the answer appears mostly in", get_clue2(word))
                     myprint("You have", attempts, "shots left \n")
-                 
+                    continue
                 elif clue1_used == False:
                     myprint("Try Clue 1 first!")
                     myprint("Tap ? and enter for Clue 1.")
+                continue
 
-        if guess.startswith(tuple(invalid_characters)):
-            myprint("Invalid input! Stay on target!")
-            continue
-        
-        if len(guess) > 1:  #check to see that the player has only entered 1 character
+        if len(guess) > 1: #and not guess.startswith('??'):  check to see that the player has only entered 1 character
             myprint("Only one character at a time!\n")
             myprint("Or enter an ! and guess the whole answer.\n")
             continue
