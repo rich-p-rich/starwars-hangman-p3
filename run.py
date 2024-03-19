@@ -1,5 +1,6 @@
 import gspread
 import random
+import os
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -216,7 +217,8 @@ def display_homescreen():
             play_the_game()
         elif option == '2':
             myprint("Loading up the Death Star plans now ...\n")
-            how_to_play() 
+            os.system('cls')
+            how_to_play()
         else:
             myprint("No target found: please enter 1 or 2.\n")
 
