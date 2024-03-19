@@ -20,40 +20,41 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('starwars_hangman')
 
 sw_hangman_answers = SHEET.worksheet('answers')
-answers = sw_hangman_answers.col_values(1)[1:] 
-clue1 = sw_hangman_answers
-clue2 = sw_hangman_answers
+answers = sw_hangman_answers.col_values(1)[1:]
+clue1 = sw_hangman_answers.col_values(2)[1:]
+clue2 = sw_hangman_answers.col_values(3)[1:]
+
 
 def myprint(*args):
     """
     add a left margin to the statements in the Heroku terminal to make it easier to read
     """
-    print(' ' ,*args)
+    myprint = print(' ' , *args)
 
 def how_to_play():
     """
     Gameplay explanation
     """
-    
+
     myprint('How To Play\n')
     myprint('Beat the Death Star and work out the identity of the hidden Star Wars name.\n')
-    myprint('The answer can be a character, a droid, a ship, a vehicle, a type\n') 
+    myprint('The answer can be a character, a droid, a ship, a vehicle, a type\n')
     myprint('of trooper, a planet, a place or an alien species.\n')
     myprint('Example: _ _ _   _ _ _ _ _   _ _ _ _\n')
-    myprint('You have 10 attempts: either guess one letter at a time or\n') 
+    myprint('You have 10 attempts: either guess one letter at a time or\n')
     myprint('To guess the whole name, first type ! and press enter. Then enter your guess.\n')
     myprint('guess the whole name.\n')
-    myprint('If you guess a letter and it is right, the letter will appear wherever\n') 
+    myprint('If you guess a letter and it is right, the letter will appear wherever\n')
     myprint('it appears.\n')
     myprint('_ _ E   _ E _ _ _   _ _ _ _\n')
-    myprint('If your guess is wrong, the game will simply continue depending on\n') 
+    myprint('If your guess is wrong, the game will simply continue depending on\n')
     myprint('how many attempts you have left.\n')
-    myprint('If you get stuck, you can ask for up to two clues. Each clue will\n') 
+    myprint('If you get stuck, you can ask for up to two clues. Each clue will\n')
     myprint('use up one attempt.\n')
-    myprint('Type ? and hit enter for Clue One.\n') 
+    myprint('Type ? and hit enter for Clue One.\n')
     myprint('Clue One will tell you whether the name is a character, a ship, and so on.\n')
     myprint('Type ?? and hit enter for Clue Two.\n')
-    myprint('Clue Two will tell you what set of films and / or TV series\n') 
+    myprint('Clue Two will tell you what set of films and / or TV series\n')
     myprint('they are seen most in.\n')
     myprint('_ _ E   _ E _ _ _   _ _ _ _\n')
     myprint('Clue one: a place.\n')
@@ -63,7 +64,6 @@ def how_to_play():
     input('Press enter to play the game:  \n')
     ("Starting your attack run ...\n")
     play_the_game()
-
 
 
 #Gameplay section 
@@ -76,39 +76,41 @@ def import_word(answers):
     return word
 
 
-def clue1(answer):
+def get_clue1(answer):
     """
     Function for giving the players clue 1
     """
-    clue1_data = clue1.get_all_values()
-    print("Clue 1 data:", clue1_data) 
+    clue1_data = sw_hangman_answers.get_all_values()
     for row in clue1_data:
-        if row[0] == answer:
-            return row[1]  
+        word = row[0].lower().strip()
+        if word == answer:
+            return row[1]
 
-def clue2(answer):
+def get_clue2(answer):
     """
     Function for giving the players clue 2
     """
-    clue2_data = clue2.get_all_values()
-    print("Clue 2 data:", clue2_data) 
+    clue2_data = sw_hangman_answers.get_all_values()
     for row in clue2_data:
-        if row[0] == answer:
-            return row[2]  
+        word = row[0].lower().strip()
+        if word == answer:
+            return row[2]
+
 
 def play_the_game():
+
     """
     Function for playing the game
     """
     word = import_word(answers).lower().strip()
     hidden_word = [letter if letter in (" ", "'", "-") else '_' for letter in word]
-    guessed_characters = set() #keeps track of all guesses in case user repeats a guess 
+    guessed_characters = set() #keeps track of all guesses in case user repeats a guess
     wrong_guesses = set() #keeps track of wrong guesses to display them to the user
     invalid_characters = [' ', '#', '*', '<', '>', ':', ';', '(', ')', '+', '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
 
     if len(word) <= 7:  #Sets the conditions for the number of wrong guesses the user is allowed based on the length of the word
         attempts = 6
-    else:   
+    else:
         attempts = 10
         
     myprint("Your target:", ' '.join(hidden_word))
@@ -121,7 +123,7 @@ def play_the_game():
 
         if guess.startswith('!'):
             guess = input("Guess the whole answer: ").lower()
-            if guess == word:  
+            if guess == word:
                 myprint("Great shot kid! That was one in a million:", word)
                 myprint("Want to find out more? Look it up on Wookieepedia: https://starwars.fandom.com/wiki/Main_Page")
                 input('Press enter to start a new game:  \n')
@@ -134,26 +136,26 @@ def play_the_game():
                 continue
         
         if guess.startswith('?') and len(guess) == 1:
-            myprint("Clue 1: the answer is a", clue1)
+            myprint("Clue 1: the answer is a", get_clue1(word))
             attempts -= 1
             continue
 
         if guess.startswith('??') and len(guess) == 2:
-            myprint("Clue 2: the answer appears mostly in \n")
+            myprint("Clue 2: the answer appears mostly in", get_clue2(word))
             attempts -= 1
             continue
 
         if guess.startswith(tuple(invalid_characters)):
             myprint("Invalid input! Stay on target!")
-            continue 
+            continue
         
         if len(guess) > 1:  #check to see that the player has only entered 1 character
             myprint("Only one character at a time!\n")
             myprint("Or enter an ! and guess the whole answer.\n")
             continue
         
-        if guess in guessed_characters: #check to see if the user is repeating a guess and remind them if they are 
-            myprint("You've taken that shot already - try something else!")  #remind the player in case they repeat a guess 
+        if guess in guessed_characters: #check to see if the user is repeating a guess and remind them if so
+            myprint("You've taken that shot already - try something else!")  #remind the player in case they repeat a guess
             continue
 
         guessed_characters.add(guess)
@@ -164,7 +166,7 @@ def play_the_game():
                 if letter == guess:
                     hidden_word[i] = guess
         else:
-            attempts -= 1 
+            attempts -= 1
             wrong_guesses.add(guess)
             myprint("Missed! Try again: you have", attempts, "shots left")
             myprint("Missed shots:", ' '.join(sorted(wrong_guesses))) #displays wrong guesses
