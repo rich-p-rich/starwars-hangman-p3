@@ -11,8 +11,8 @@ This game is aimed primarily at the following:
 
 ## Purpose
 The purpose of the game is:
-- to test the player's depth of knowledge about Star Wars, from the well-known (Darth Vader and Grogu) to more obscure, deeper cuts (the Jedi called Yaddle, or member of the Rebellion called Ruescott Melshi)
-- to offer the player a fun and relaxing passtime 
+- to test the player's depth of knowledge about Star Wars, from the well-known (Darth Vader and Grogu) to more obscure, deeper cuts (the Jedi called Yaddle, or the bar-tender Wuher)
+- to offer the player a fun and relaxing pass-time 
 
 ## How to play: summary
 The gameplay is fairly simple, as befits a hangman game, but I have added a couple of extra options to mix things up. The game works as follows: 
@@ -36,8 +36,9 @@ _ _ _ _ _ '_  _ _ _ _ _ _
 - as long as they guess the answer before they have used up all their wrong guesses, they win
 - if not, they lose
 
+## How to play: in depth
 
-
+TO BE ADDED
 
 ## Testing
 
@@ -58,8 +59,8 @@ _ _ _ _ _ '_  _ _ _ _ _ _
 |If the target word has 7 or more characters: | The user is told they have 10 wrong guesses ('shots') | Pass |
 |Gameplay: the player enters a correct character: | Each instance of that character in the target is populated, 'Great shot' message shown | Pass |
 |Gameplay: the player enters an incorrect character: | 'Missed' message is shown, the list of incorrect characters so far entered is shown | Pass |
-|Gameplay: the player tries to repeat a character they have already used, correctly or incorrectly: | 'Reminder' message is shown, user prompted to try something else, no attempts lost | Pass |
 |Gameplay: the player enters an incorrect character: | One attempt is lost, user us shown how many remaining attempts there are | Pass |
+|Gameplay: the player tries to repeat a character they have already used, correctly or incorrectly: | 'Reminder' message is shown, user prompted to try something else, no attempts lost | Pass |
 |Gameplay: the player enters more than one character with exception of ??: | Error message is shown, no attempts are lost | Pass |
 |Gameplay: the player enters more than one character with exception of ??: | User is reminded that they should enter ! to guess the whole answer | Pass |
 |Gameplay: the player enters ! | The player is prompted to guess the entire answer | Pass |
@@ -81,9 +82,16 @@ _ _ _ _ _ '_  _ _ _ _ _ _
 |Gameplay: each incorrect attempt and Clue reduces the number of available attempts by 1 until none are left | Player loses and is told they have lost against the Death Start  | Pass |
 |Gameplay: player loses | Player is shown the correct answer and prompted to look it up on Wookiepedia | Pass |
 |Gameplay: player loses | Player is prompted to play again by pressing the enter key | Pass |
-|Gameplay: player wins | Player is congratulated and told the have won | Pass |
+|Gameplay: player wins | Player is congratulated and told they have won | Pass |
 |Gameplay: player wins | Player is asked if they would like to find out more on Wookiepedia | Pass |
 |Gameplay: player wins | Player is prompted to play again by pressing the enter key | Pass |
+
+## Bugs
+
+TO BE COMPLETED 
+
+
+
 
 Welcome,
 

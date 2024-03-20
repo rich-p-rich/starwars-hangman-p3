@@ -109,10 +109,12 @@ def play_the_game():
     Function for playing the game
     """
     word = import_word(answers).lower().strip()
-    hidden_word = [letter if letter in (" ", "'", "-") else '_' for letter in word]
+    hidden_word = [letter if letter in (" ", "'", "-")
+                   else '_' for letter in word]
     guessed_characters = set()  # monitors guesses in case user repeats a guess
     wrong_guesses = set()  # monitors wrong guesses to display them to the user
-    invalid_characters = [' ', '#', '*', '<', '>', ':', ';', '(', ')', '+', '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
+    invalid_characters = [' ', '#', '*', '<', '>', ':', ';', '(', ')', '+',
+                          '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
     clue1_used = False
 
     """
@@ -163,12 +165,12 @@ def play_the_game():
             continue
 
         if guess.startswith('??') and len(guess) == 2:
-            if clue1_used == True:
+            if clue1_used is True:
                 attempts -= 1
                 myprint("Clue 2: they mostly appear in", get_clue2(word))
                 myprint("You have", attempts, "shots left \n")
                 continue
-            elif clue1_used == False:
+            elif clue1_used is False:
                 myprint("Try Clue 1 first!")
                 myprint("Tap ? and enter for Clue 1.")
                 continue
