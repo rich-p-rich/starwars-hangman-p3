@@ -116,7 +116,7 @@ def play_the_game():
     guessed_characters = set()  # monitors guesses in case user repeats a guess
     wrong_guesses = set()  # monitors wrong guesses to display them to the user
     invalid_characters = [' ', '#', '*', '<', '>', ':', ';', '(', ')', '+',
-                          '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
+                          '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}'] 
     clue1_used = False  # this tracks whether clue1 has been used or not
     clue2_used = False  # this tracks whether clue2 has been used or not 
 
@@ -185,6 +185,7 @@ def play_the_game():
                 attempts -= 1
                 myprint("Clue 2: they mostly appear in", get_clue2(word))
                 myprint("You have", attempts, "shots left \n")
+                clue2_used = True
             elif clue1_used is False:
                 myprint("Try Clue 1 first!")
                 myprint("Tap ? and enter for Clue 1.")
@@ -258,9 +259,9 @@ The user chooses to play the game or read the gameplay instructions
 
 
 def clear_terminal():
-    if os.name == 'nt':  # Windows
+    if os.name == 'nt':  # for Windows
         os.system('cls')
-    else:  # Unix/Linux/MacOS
+    else:  # for Unix/Linux/MacOS
         os.system('clear')
 
 
