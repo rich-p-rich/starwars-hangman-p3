@@ -157,9 +157,29 @@ def play_the_game():
                 myprint("Want to find out more?\n")
                 myprint("Look it up on Wookieepedia:\n")
                 myprint("https://starwars.fandom.com/wiki/Main_Page\n")
-                input('Press enter to start a new game:  \n')
-                ("Starting your attack run ...\n")
-                play_the_game()
+                myprint("Choose your option:\n")
+                option1 = "Play a new game: press 1 and enter"
+                option2 = "Add your game to the leaderboard: press 2 and enter"
+                option3 = "Return to homescreen: press 3 and enter"
+                myprint(option1)
+                myprint(option2)
+                myprint(option3)
+                option = input("   Enter your option:  ")
+
+                if option == '1':
+                    myprint("Starting your attack run ... \n")
+                    play_the_game()
+                    return
+                elif option == '2':
+                    myprint("Get ready for your award ceremony! \n")
+                    leaderboard()
+                    return
+                elif option == '3':
+                    myprint("Heading back to Home One now ...")
+                    display_homescreen()
+                    return
+                else:
+                    myprint("No target found: please enter 1, 2, or 3.\n")
                 break
             else:
                 attempts -= 1
@@ -232,25 +252,66 @@ def play_the_game():
 
         myprint("Your target:", ' '.join(hidden_word))
         if '_' not in hidden_word:
-            myprint("Great shot kid! That was one in a million:", word)
+            myprint("Great shot kid! That was one in a million:", word)  # player wins
             myprint("Want to find out more?\n")
             myprint("Look it up on Wookipedia:\n")
             myprint("https://starwars.fandom.com/wiki/Main_Page\n")
-            input('Press enter to start a new game:  \n')
-            ("Starting your attack run ...\n")
-            play_the_game()
+            myprint("Choose your option:\n")
+            option1 = "Play a new game: press 1 and enter"
+            option2 = "Add your game to the leaderboard: press 2 and enter"
+            option3 = "Return to homescreen: press 3 and enter"
+            myprint(option1)
+            myprint(option2)
+            myprint(option3)
+            option = input("   Enter your option:  ")
+
+            if option == '1':
+                myprint("Starting your attack run ... \n")
+                play_the_game()
+                return
+            elif option == '2':
+                myprint("Get ready for your award ceremony! \n")
+                leaderboard()
+                return
+            elif option == '3':
+                myprint("Heading back to Home One now ...")
+                display_homescreen()
+                return
+            else:
+                myprint("No target found: please enter 1, 2, or 3.\n")
             break
+            
 
     if attempts == 0:
-        myprint("Oh no! The Death Star has won!")
+        myprint("Oh no! The Death Star has won!")  # player loses
         myprint("The answer was:", word)
         myprint("Don't recognise the answer?\n")
         myprint("Look it up on Wookipedia:\n")
         myprint("https://starwars.fandom.com/wiki/Main_Page\n")
-    input('Press enter to play the game:  \n')
-    ("Starting your attack run ...\n")
-    play_the_game()
+        myprint("Choose your option:\n")
+        option1 = "Play a new game: press 1 and enter"
+        option2 = "Add your game to the leaderboard: press 2 and enter"
+        option3 = "Return to homescreen: press 3 and enter"
+        myprint(option1)
+        myprint(option2)
+        myprint(option3)
+        option = input("   Enter your option:  ")
 
+        if option == '1':
+            myprint("Starting your attack run ... \n")
+            play_the_game()
+            return
+        elif option == '2':
+            myprint("Get ready for your award ceremony! \n")
+            leaderboard()
+            return
+        elif option == '3':
+            myprint("Heading back to Home One now ...")
+            display_homescreen()
+            return
+        else:
+            myprint("No target found: please enter 1, 2, or 3.\n")
+            
 
 """
 Set up homescreen
