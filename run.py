@@ -75,7 +75,9 @@ Gameplay section
 
 def import_word(answers):
     """
-    Import random word from the answers sheet
+    Import random word from the answers sheet: converts letters
+    to lower case, removes trailing blanks that may exist in the 
+    source google spreadsheet
     """
     word = random.choice(answers).lower().strip()
     return word
@@ -115,11 +117,13 @@ def play_the_game():
     wrong_guesses = set()  # monitors wrong guesses to display them to the user
     invalid_characters = [' ', '#', '*', '<', '>', ':', ';', '(', ')', '+',
                           '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
-    clue1_used = False
+    clue1_used = False  # this tracks whether clue1 has been used or not
+    clue2_used = False  # this tracks whether clue2 has been used or not 
 
     """
-    Set the nr of wrong guesses the user is allowed
-    This is based on total nr of characters in the target
+    This sets the nr of wrong guesses the user is allowed.
+    This is based on total nr of characters in the target and can be changed here
+    if required.
     """
     if len(word) <= 6:
         attempts = 6
@@ -134,10 +138,18 @@ def play_the_game():
     while attempts > 0:
         guess = input("Take a shot: ").lower()
 
+        """
+        Invalid characters (empty input with the
+        return key is handled with the 1 character only
+        validation condition below)
+        """
         if guess.startswith(tuple(invalid_characters)):
             myprint("Invalid input! Stay on target!")
             continue
 
+        """
+        Conditions for guessing the whole answer using the ! 
+        """
         if guess.startswith('!'):
             guess = input("Guess the whole answer: ").lower()
             if guess == word:
@@ -155,44 +167,52 @@ def play_the_game():
                 continue
 
         """
-        Conditions for using the clues
+        Conditions for asking for clues 1 and 2
         """
         if guess.startswith('?') and len(guess) == 1:
-            attempts -= 1
-            myprint("Clue 1: the answer is a", get_clue1(word))
-            myprint("You have", attempts, "shots left \n")
-            clue1_used = True
+            if clue1_used is False and clue2_used is False:
+                attempts -= 1
+                myprint("Clue 1: the answer is a", get_clue1(word))
+                myprint("You have", attempts, "shots left \n")
+                clue1_used = True
+            else:
+                myprint("Reminder: the answer is a", get_clue1(word))
+                myprint("You have not lost any shots for this reminder.\n")
             continue
 
-        if guess.startswith('??') and len(guess) == 2:
-            if clue1_used is True:
+        elif guess.startswith('??') and len(guess) == 2:
+            if clue1_used is True and clue2_used is False:
                 attempts -= 1
                 myprint("Clue 2: they mostly appear in", get_clue2(word))
                 myprint("You have", attempts, "shots left \n")
-                continue
             elif clue1_used is False:
                 myprint("Try Clue 1 first!")
                 myprint("Tap ? and enter for Clue 1.")
-                continue
+            else:
+                myprint("Reminder: the answer is a", get_clue2(word))
+                myprint("You have not lost any shots for this reminder.\n")
+            continue
 
         """
         Ensure the user enters only 1 charaacter
         except for ?? and whole answer guesses
         """
-        if len(guess) != 1:
+        if len(guess) != 1:  # this makes hitting the return key on its own an invalid input
             myprint("Invalid input! Enter a single character\n")
             myprint("or enter an ! and guess the whole answer.\n")
             continue
 
         """
         Checks if the user is repeating a guess
-        and remind them if they are
+        and reminds them if they are; modifies the variable
+        guessed_characters (declared in the play_the_game function at line 116)
         """
         if guess in guessed_characters:
             myprint("You've taken that shot already - try something else!")
             continue
 
         guessed_characters.add(guess)
+        
 
         """
         Checks guess against answer, react accordingly

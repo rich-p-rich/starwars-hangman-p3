@@ -1,40 +1,25 @@
-        if guess == "!":
-            guess_answer = input("Guess the whole answer: ").lower()
-
-            if guess_answer == word: 
-                myprint("Great shot kid! That was one in a million:", word)
-                myprint("Want to find out more? Look it up on Wookipedia: https://starwars.fandom.com/wiki/Main_Page\n')")
-                input('Press enter to start a new game.\n') 
-                break
-
-            else: 
+if guess.startswith('?') and len(guess) == 1:
+            if clue1_used is False and clue2_used is False:
                 attempts -= 1
-                myprint("Missed! Try again: you have", attempts, "shots left")
-                guessed_characters.add(guess)
+                myprint("Clue 1: the answer is a", get_clue1(word))
+                myprint("You have", attempts, "shots left \n")
+                clue1_used = True
+            else:
+                myprint("Reminder: the answer is a", get_clue1(word))
+                myprint("You have not lost any shots for this reminder.\n")
+            continue
+
+        if guess.startswith('??') and len(guess) == 2:
+            if clue1_used is True and clue2_used is False:
+                attempts -= 1
+                myprint("Clue 2: they mostly appear in", get_clue2(word))
+                myprint("You have", attempts, "shots left \n")
                 continue
-
-
-answers_sheet = SHEET.worksheet('answers')
-answers = answers_sheet.col_values(1)[1:]
-clue1 = SHEET.worksheet('clue1')
-clue2 = SHEET.worksheet('clue2')
-
-
-def get_clue1(answer):
-    """
-    Function for giving the players clue 1
-    """
-    clue1_data = sw_hangman_answers.get_all_values()
-    for row in clue1_data:
-        word = row[0].lower().strip()
-        if word == answer:
-            return row[1]
-
-def get_clue2(answer):
-    """
-    Function for giving the players clue 2
-    """
-    clue2_data = clue2.get_all_values()
-    for row in clue2_data:
-        if row[0] == answer:
-            return row[2]
+            elif clue1_used is False:
+                myprint("Try Clue 1 first!")
+                myprint("Tap ? and enter for Clue 1.")
+                clue1_used = True
+                continue
+            else: 
+                myprint("Reminder: the answer is a", get_clue2(word))
+                myprint("You have not lost any shots for this reminder.\n")
