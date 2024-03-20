@@ -179,9 +179,9 @@ def play_the_game():
         Ensure the user enters only 1 charaacter
         except for ?? and whole answer guesses
         """
-        if len(guess) > 1:
-            myprint("Only one character at a time!\n")
-            myprint("Or enter an ! and guess the whole answer.\n")
+        if len(guess) != 1:
+            myprint("Invalid input! Enter a single character\n")
+            myprint("or enter an ! and guess the whole answer.\n")
             continue
 
         """
