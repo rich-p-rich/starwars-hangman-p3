@@ -24,6 +24,7 @@ sw_hangman_answers = SHEET.worksheet('answers')
 answers = sw_hangman_answers.col_values(1)[1:]
 clue1 = sw_hangman_answers.col_values(2)[1:]
 clue2 = sw_hangman_answers.col_values(3)[1:]
+sw_hangman_leaderboard = SHEET.worksheet('leaderboard')
 
 
 def myprint(*args):
@@ -153,7 +154,7 @@ def play_the_game():
         if guess.startswith('!'):
             guess = input("Guess the whole answer: ").lower()
             if guess == word:
-                myprint("Great shot kid! That was one in a million:", word)
+                myprint("Great shot kid! That was one in a million:", word) # player wins with a guess
                 myprint("Want to find out more?\n")
                 myprint("Look it up on Wookieepedia:\n")
                 myprint("https://starwars.fandom.com/wiki/Main_Page\n")
@@ -172,7 +173,9 @@ def play_the_game():
                     return
                 elif option == '2':
                     myprint("Get ready for your award ceremony! \n")
-                    leaderboard()
+                    name = input("Enter your name: ")  
+                    update_leaderboard(name, word, attempts)
+                    leaderboard_page()
                     return
                 elif option == '3':
                     myprint("Heading back to Home One now ...")
@@ -183,7 +186,7 @@ def play_the_game():
                 break
             else:
                 attempts -= 1
-                myprint("Missed! Try again:", attempts, "shots left \n")
+                myprint("Missed! Try again:", attempts, "shots left \n") # player's guess whole answer was wrong
                 continue
 
         """
@@ -271,7 +274,9 @@ def play_the_game():
                 return
             elif option == '2':
                 myprint("Get ready for your award ceremony! \n")
-                leaderboard()
+                name = input("Enter your name: ")
+                update_leaderboard(name, word, attempts)
+                leaderboard_page()
                 return
             elif option == '3':
                 myprint("Heading back to Home One now ...")
@@ -292,6 +297,10 @@ def play_the_game():
         option1 = "Play a new game: press 1 and enter"
         option2 = "Add your game to the leaderboard: press 2 and enter"
         option3 = "Return to homescreen: press 3 and enter"
+        myprint("Choose your option:\n")
+        option1 = "Play a new game: press 1 and enter"
+        option2 = "View the leaderboard: press 2 and enter"
+        option3 = "Return to homescreen: press 3 and enter"
         myprint(option1)
         myprint(option2)
         myprint(option3)
@@ -302,8 +311,8 @@ def play_the_game():
             play_the_game()
             return
         elif option == '2':
-            myprint("Get ready for your award ceremony! \n")
-            leaderboard()
+            myprint("Going the the award ceremony. No medal for you, Chewie!\n")
+            leaderboard_page()
             return
         elif option == '3':
             myprint("Heading back to Home One now ...")
@@ -311,15 +320,25 @@ def play_the_game():
             return
         else:
             myprint("No target found: please enter 1, 2, or 3.\n")
+
             
-
-"""
-Set up homescreen
-The user chooses to play the game or read the gameplay instructions
-"""
-
+def leaderboard_page():
+    """
+    Display the leaderboard and prompt the player to input their name
+    """
+    
+    leaderboard_sheet = SHEET.worksheet('leaderboard')
+    leaderboard_data = leaderboard_sheet.get_all_records()
+    myprint("Leaderboard:")
+    for entry in leaderboard_data:
+        myprint(f"Player: {entry['Name']}, Guessed Word: {entry['Guessed Word']}, Number of Guesses: {entry['Number of Guesses']}")
+    
 
 def clear_terminal():
+    """
+    Set up homescreen
+    The user chooses to play the game or read the gameplay instructions
+    """
     if os.name == 'nt':  # for Windows
         os.system('cls')
     else:  # for Unix/Linux/MacOS
@@ -333,21 +352,43 @@ def display_homescreen():
 
     while True:
         myprint('Choose your option:\n')
-        option1 = 'Play the game: press "1" and enter.\n'
-        option2 = 'How to play: press "2" and enter.\n'
+        option1 = 'Play the game: press 1 and enter.\n'
+        option2 = 'View the leaderboard: press 2 and enter\n'
+        option3 = 'How to play: press 3 and enter.\n'
         myprint(option1)
         myprint(option2)
+        myprint(option3)
         option = input("  Enter your option:  ")
 
         if option == '1':
             myprint("Starting your attack run ...\n")
             play_the_game()
         elif option == '2':
+            myprint("Leaderboard loading ...\n")
+            leaderboard_page()            
+        elif option == '3':
             myprint("Loading up the Death Star plans now ...\n")
             clear_terminal()
             how_to_play()
         else:
             myprint("No target found: please enter 1 or 2.\n")
 
+
+def leaderboard():
+    """
+    Function to update and display the leaderboard
+    """
+    leaderboard_sheet = SHEET.worksheet('leaderboard')
+    leaderboard_data = leaderboard_sheet.get_all_records()
+    myprint("Leaderboard:")
+    for entry in leaderboard_data:
+        myprint(f"Player: {entry['Name']}, Guessed Word: {entry['Guessed Word']}, Attempts: {entry['Attempts']}")
+    
+def update_leaderboard(name, word, attempts):
+    """
+    Function to update the leaderboard with the player's information
+    """
+    leaderboard_sheet = SHEET.worksheet('leaderboard')
+    leaderboard_sheet.append_row([name, word, attempts])
 
 display_homescreen()
