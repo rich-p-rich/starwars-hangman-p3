@@ -80,8 +80,8 @@ def import_word(answers):
     to lower case, removes trailing blanks that may exist in the 
     source google spreadsheet
     """
-    word = random.choice(answers).lower().strip()
-    return word
+    word = random.choice(answers).lower().strip() 
+    return word # this is the target to be guessed
 
 
 def get_clue1(answer):
@@ -131,6 +131,9 @@ def play_the_game():
     else:
         attempts = 10
 
+    attempts_used = len(word) - attempts # calculate nr of attempts used
+    total_guesses = 0
+
     myprint("Your target:", ' '.join(hidden_word))
     myprint('\n')
     myprint("You have", attempts, "shots to save your planet.")
@@ -147,6 +150,8 @@ def play_the_game():
         if guess.startswith(tuple(invalid_characters)):
             myprint("Invalid input! Stay on target!")
             continue
+
+        total_guesses += 1
 
         """
         Conditions for guessing the whole answer using the ! 
@@ -186,7 +191,7 @@ def play_the_game():
                 break
             else:
                 attempts -= 1
-                myprint("Missed! Try again:", attempts, "shots left \n") # player's guess whole answer was wrong
+                myprint(f"Missed! Try again: {attempts_used} out of {len(word)} attempts used") # player's guess whole answer was wrong
                 continue
 
         """
