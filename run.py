@@ -325,18 +325,6 @@ def play_the_game():
         else:
             myprint("No target found: please enter 1, 2, or 3.\n")
 
-
-def leaderboard_page():
-    """
-    Displays the leaderboard and prompts the player to input their name
-    """
-    leaderboard_sheet = SHEET.worksheet('leaderboard')
-    leaderboard_data = leaderboard_sheet.get_all_records()
-    myprint("Leaderboard:")
-    for entry in leaderboard_data:
-        myprint(f"Player: {entry['Name']}, Guessed Word:{entry['Guessed Word']}, Number of Guesses:{entry['Number of Guesses']}")
-
-
 def clear_terminal():
     """
     This is a clear screen function for the homescreen
@@ -383,15 +371,16 @@ def display_homescreen():
             myprint("No target found: please enter 1 or 2.\n")
 
 
-def leaderboard():
+
+def leaderboard_page():
     """
-    Updates and displays the leaderboard in the terminal and the spreadsheet
+    Displays the leaderboard and prompts the player to input their name
     """
     leaderboard_sheet = SHEET.worksheet('leaderboard')
     leaderboard_data = leaderboard_sheet.get_all_records()
     myprint("Leaderboard:")
     for entry in leaderboard_data:
-        myprint(f"Player: {entry['Name']}, Guessed Word: {entry['Guessed Word']}, Attempts: {entry['Attempts']}")
+        myprint(f"Player: {entry['Name']}, Guessed Word:{entry['Guessed Word']}, Number of Guesses Remaining:{entry['Number of Guesses Remaining']}")
 
 
 def update_leaderboard(name, word, attempts):

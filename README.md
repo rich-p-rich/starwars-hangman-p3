@@ -14,12 +14,12 @@ The purpose of the game is:
 - to test the player's depth of knowledge about Star Wars, from the well-known (Darth Vader and Grogu) to more obscure, deeper cuts (the Jedi called Yaddle, or the bar-tender Wuher)
 - to offer the player a fun and relaxing pass-time 
 
-# How the app works: summary
+# How the app works: overview
 Although Hangman is a simple game to play, it is possible to add levels of difficulty. Do you, for example, strictly enforce a "10 attempt only" rule, including right and wrong guesses? In this scenario, the user has a strict number of attempts to get the answer, and each guess - right or wrong - uses up an attempt. Or do you allow the player to guess correctly without losing any attempts? This is the traditional Hangman gameplay, whereby no attempts are used up when the player guesses correctly; they only lose attempts for incorrect guesses.  
 
 Although I originally planned to go for the strict '10 attempts only' option, I ended up developing the traditional gameplay with a couple of extra options to mix things up. The harder option could be added at a later date.  
 
-As things stand now: the game works as follows: 
+As things stand now: the app / game works as follows: 
 - all data for the answers, clues 1 and 2 are stored in the same worksheet in a linked google spreadsheet 
 - details for the leaderboard are exported to the same spreadsheet but in a different worksheet and can be added to / viewed within the terminal at the player's request 
 - from the homescreen, the user can choose to play the game, view the leaderboard or read the rules by entering 1, 2 or 3 on their keyboard (no other options are allowed)
@@ -64,8 +64,8 @@ The top line of the terminal (which I cannot change) shows it without a left mar
 
 ![Left margin in terminal](documentation/images/2a_myprint_terminal.PNG)
 
-## How to play explanation
-This is simply a sequence of statements added with myprint to explain the gameplay. I thought it would be good practice to add this in, especially to clarify what kinds of things the answers might be, to ask for the two clues and how to guess the whole answer:
+## How to play: explanation
+This is a sequence of statements added with myprint to explain the gameplay. I thought it would be good practice to add this in, especially to clarify what kinds of things the answers might be, to ask for the two clues and how to guess the whole answer:
 
 ![Gameplay](documentation/images/3_gameplay_explanation.PNG)
 
@@ -108,7 +108,10 @@ In this section I have defined some of the main variables for playing the game:
 Some clarifications: 
 - Spaces, apostrophes and hyphens. I wanted to display hyphens, apostrophes and spaces as they are rather than hidden as underscores. I thought that asking the player to guess hyphens and apostrohes a little unfair, and would be inaccurate to some of the source material - I didn't want to display x wing or xwing which it is correctly x-wing. Additionally, showing spaces between words seemed only fair, which is why I added these three exceptions to the underscores here. 
 - Guessed characters: I did not want to penalise the player who repeated a guess by mistake, so this variable keeps track of what they have guessed - correctly or incorrectly - and gives them a reminder in this case; additionally, they do not lose any attempts for repeated guesses. 
+In this example, the player enters the letter Z twice, and gets the reminder on the second attempt:
+![Repeat-guess](documentation/images/15_repeat-wrong-guess.PNG)
 - Wrong guesses: to help the player keep track of where they are in the game, I use this variable to monitor their wrong guesses so I can display them to the player. I considered adding all guesses to this list, but as the correctly-guessed characters appear in the target word(s), this seemed redundant. 
+![List-wrong-guesses](documentation/images/16_list-wrong-guesses.PNG)
 - Invalid characters: it would be easy to lose an attempt by accidently entering a semi-colon, hash sign or asterisk, so I have excluded them where; if the user enters an invalid character, they get a warning message but they do not lose an attempt. 
 
 This is the code that displays the corresponding error message: 
@@ -129,7 +132,7 @@ This could be adapted into a future iteration of the game, allowing the player t
 This returns me to a question I asked in the 'summary' of 'How the app works': what does an attempt mean? Does the player get 10 attempts in total, regardless if whether the guess is right or wrong, or does 10 attempts mean 10 wrong attempts? In the context of hangman, an attempt means a wrong guess, and so that is what it means here. But if I were to take this game any further, I would develop the naming coventions a little more to ensure 100% transparency.  
 
 ## Guess whole answer
-As the rules of Hangman only allow one character at a time, I needed a way for the player to make a guess at the whole answer. I enabled this function by allowing the user to enter a single exclamation mark (!) as a trigger to show the "Guess whole answer" input:
+As the rules of Hangman only allow one character at a time but also for the user to guess the whole answer, I needed a way to make both options acceptable. I enabled this function by allowing the user to enter a single exclamation mark (!) as a trigger to show the "Guess whole answer" input:
 
 ![Guess-whole-answer](documentation/images/9_guess-whole-answer.PNG)
 
@@ -143,7 +146,41 @@ As the Star Wars universe is quite vast, and the types of answers could include 
 - clue 1 tells the player what the target is: whether it is a spaceship, character etc
 - clue 2 tells the player in what series of films or TV shows the answer is most commonly found, e.g. The Original Trilogy, The Mandalorian, Kenobi, etc; if the answer is found in more than one series, I let the clue show the most common series the answer is found in, e.g. The Prequels and The Clone Wars.  
 - each clue uses up one attempt 
-- the player cannot get clue 2 until they have asked for clue 1.
+- the player cannot get clue 2 until they have asked for clue 1: if they try, they get an error message but do not lose any attempts.
+![Clue-1-first](documentation/images/10a_clue-1-first.PNG)
+
+- if the player repeats a request for a clue, they do not lose any attempts. I found during testing that I would sometimes accidently enter ? rather than ?? when asking for clue 2, which is why I implemented this safety-net.
+![Clue-repeat](documentation/images/10b_clue-repeat.PNG)
+
+## Standard gameplay: 1 character only
+In order to enforce the Hangman rule of 1 character per guess, I wrote this code to check the length of the input; with the exception of two question marks, this returns an error message if the player enters multiple characters. Additionally, it disables the possibility that the user enters a blank string by hitting the enter key; this issue with the enter key was a problem that I resolved with the help of my tutor, as I found it difficult to describe exactly what the enter key did, and therefore how to exclude it:
+![1-char-only](documentation/images/11_1-char-only.PNG)
+
+## Standard gameplay: correct and incorrect guesses 
+Having covered the exceptions to the rules, we now come to the standard gameplay section. This is the code which governs what happens when the player guesses a single character:
+![standard-play](documentation/images/12_standard-play.PNG)
+If the guess is correct, each instance of its appearance in the word will be populated.
+If the guess is incorrect, the the number of attempts is reduced by one, the guess is entered to the 'wrong guesses' list, and the user is told (i) the guess was wrong and (ii) how many attempts they have left.  
+
+## End of game, win or lose
+The functionality at the end of the game is basically the same regardless of whether the player wins or loses, with a couple of divergences:
+![win](documentation/images/13_player-wins.PNG)
+
+![lose](documentation/images/13_player-loses.PNG)
+- in each case, the player is referred to the fan wiki "Wookipedia" to either find out more (if they won) or look up the answer (if they lost)
+- in both cases, they can either play again or return to the homepage
+- if the player loses, they can look at the leaderboard but not update it
+- if the player wins, they can update the leaderboard; if they choose this option, it triggers an input field so they can enter their name. After that, they will be directed to the leaderboad where they can see the answer they guessed, and how many attempts are remaining
+![input-name](documentation/images/17_leaderboard-name.PNG)
+
+## The Leaderboard 
+This was the last section of the app I put together. I created it for two reasons: 
+- It's a good gameplay feature to include 
+- I also wanted to practise exporting the results to an external spreadsheet as this is a common real-life request when, e.g. tracking sales, customer contacts etc.  
+
+The functionality is reas
+
+
 
 ## Testing
 
