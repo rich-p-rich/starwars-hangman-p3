@@ -9,12 +9,6 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
-SCOPE = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
-    ]
-
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
@@ -189,7 +183,7 @@ def play_the_game():
                 else:
                     myprint("No target found: please enter 1, 2, or 3.\n")
                 break
-            
+
             else:  # Player's guess for the whole answer is wrong
                 attempts -= 1
                 myprint("Missed! Try again:", attempts, "shots left \n")
@@ -315,7 +309,8 @@ def play_the_game():
             play_the_game()
             return
         elif option == '2':
-            myprint("Going the the award ceremony. No medal for you, Chewie!\n")
+            myprint("Going the the award ceremony,\n")
+            myprint("but no medal for you, Chewie!\n")
             leaderboard_page()
             return
         elif option == '3':
@@ -325,11 +320,12 @@ def play_the_game():
         else:
             myprint("No target found: please enter 1, 2, or 3.\n")
 
+
 def clear_terminal():
     """
     This is a clear screen function for the homescreen
     I took the code from Stack Overflow question 76955384
-    -> full link in the ReadMe    
+    -> full link in the ReadMe
     """
     if os.name == 'nt':  # for Windows
         os.system('cls')
@@ -371,16 +367,20 @@ def display_homescreen():
             myprint("No target found: please enter 1 or 2.\n")
 
 
-
 def leaderboard_page():
     """
     Displays the leaderboard and prompts the player to input their name
+    Long f"Player Name string runs over three lines using " to concatenate the
+    lines: solution from Stack Overflow, nr 1874592
+    (link in ReadMe Pep8 section).
     """
     leaderboard_sheet = SHEET.worksheet('leaderboard')
     leaderboard_data = leaderboard_sheet.get_all_records()
     myprint("Leaderboard:")
     for entry in leaderboard_data:
-        myprint(f"Player: {entry['Name']}, Guessed Word:{entry['Guessed Word']}, Number of Guesses Remaining:{entry['Number of Guesses Remaining']}")
+        myprint(f"Player: {entry['Name']},"
+                "Guessed Word:{entry['Guessed Word']}, Number of Guesses"
+                "Remaining:{entry['Number of Guesses Remaining']}")
 
 
 def update_leaderboard(name, word, attempts):

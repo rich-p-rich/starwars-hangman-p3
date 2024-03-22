@@ -11,13 +11,36 @@ This game is aimed primarily at the following:
 
 ## Purpose
 The purpose of the game is:
-- to test the player's depth of knowledge about Star Wars, from the well-known (Darth Vader and Grogu) to more obscure, deeper cuts (the Jedi called Yaddle, or the bar-tender Wuher)
+- to test the player's depth of knowledge about Star Wars, from the well-known (Darth Vader and Grogu) to the obscure (the Jedi called Yaddle, or the bar-tender Wuher) to the very deep cuts (Falumpaset creatures or the planet Vandor)
 - to offer the player a fun and relaxing pass-time 
 
-# How the app works: overview
+# What's so Star Wars-y about this game? 
+- The answers are all taken from the so-called 'canon' Star Wars films and TV shows released by George Lucas and from the Disney Era
+- The answer could be anything from the Star Wars universe: a character, droid, ship, vehicle, weapon, type of trooper (stormtrooper, dark trooper, clone trooper), creature, planet, place or an alien species
+- I have tried to give the messages a 'Star Wars' flavour, e.g. 'starting your attack run ...' when starting a game, or 'Loading up the Death Star plans now ...' when the player chooses to view the gameplay
+- If I were to come back to this, I would try to implement some Ascii Art to illustrate the gameplay with Star Wars-style images, but I could not do that this time. 
+
+# Hangman Rules and Variants
 Although Hangman is a simple game to play, it is possible to add levels of difficulty. Do you, for example, strictly enforce a "10 attempt only" rule, including right and wrong guesses? In this scenario, the user has a strict number of attempts to get the answer, and each guess - right or wrong - uses up an attempt. Or do you allow the player to guess correctly without losing any attempts? This is the traditional Hangman gameplay, whereby no attempts are used up when the player guesses correctly; they only lose attempts for incorrect guesses.  
 
-Although I originally planned to go for the strict '10 attempts only' option, I ended up developing the traditional gameplay with a couple of extra options to mix things up. The harder option could be added at a later date.  
+Although I originally planned to go for the strict '10 attempts only' option, I ended up developing the traditional gameplay with a couple of extra options to mix things up. The harder option could be added at a later date.
+
+# Original Plan
+Here is how I sketched out the game using Lucid Chart:
+
+- Gameflow:
+![Plan1](documentation/plans/plan1_sw-hangman_gameflow.png)
+
+
+- Conditions:
+![Plan2](documentation/plans/plan2_conditions-errors.png)
+
+- Conditions - work in progress:
+![Plan2](documentation/plans/plan2_conditions-errors_in-prog.png)
+
+
+# How the app works: overview
+
 
 As things stand now: the app / game works as follows: 
 - all data for the answers, clues 1 and 2 are stored in the same worksheet in a linked google spreadsheet 
@@ -50,11 +73,24 @@ _ _ _ _ _ '_  _ _ _ _ _ _ (jabba's palace)
 
 # App functionality: in depth
 
-## The Google Doc and API
+## Data Model: The Google Doc and API
+
+My 'starwars_hangman' Google Doc stores all the answers in column A of the 'answers' worksheet. Clue 1 is stored in column B and Clue 2 in column C. I entered the information myself (as a long-term fan, this was fun!) and added the information for Clues 1 and 2 myself. This is currently 'export only' in that the game calls information from it, but does not update it. 
+
+The second worksheet is the 'leaderboard': I both call information from it to display the leaderboard, and update it when the successful player chooses to do so. It is updated when the player chooses to add their name, and the .append method adds their name as well as the guessed answer and number of attempts to the worksheet.  
 
 ![Linking the google doc](documentation/images/1_links_googledocs.PNG)
 
-## My Print
+As part of the set-up and deployment, I set up an API to access the Google Doc usinging the Google OAuth2 protocol
+
+I imported the modules listed in the screenshot:
+ 
+- gspread for accessing the Google Sheet
+- random for choosing a cell at random in the Google Sheet
+- OS to allow me to implement the 'clear screen' function for the homepage 
+- credentials for accessing the linked spreadsheet 
+
+## MyPrint
 
 I created a myprint for the Heroku terminal rather than using the standard 'print' because I wanted to give the terminal a left margin. I the text in the Heroku terminal difficult to read with the standard 'print' function so added a basic left margin with a new 'myprint' function coded as follows: 
 
@@ -159,30 +195,50 @@ In order to enforce the Hangman rule of 1 character per guess, I wrote this code
 ## Standard gameplay: correct and incorrect guesses 
 Having covered the exceptions to the rules, we now come to the standard gameplay section. This is the code which governs what happens when the player guesses a single character:
 ![standard-play](documentation/images/12_standard-play.PNG)
+
 If the guess is correct, each instance of its appearance in the word will be populated.
 If the guess is incorrect, the the number of attempts is reduced by one, the guess is entered to the 'wrong guesses' list, and the user is told (i) the guess was wrong and (ii) how many attempts they have left.  
 
 ## End of game, win or lose
 The functionality at the end of the game is basically the same regardless of whether the player wins or loses, with a couple of divergences:
+- Player wins
+
 ![win](documentation/images/13_player-wins.PNG)
+
+The approach is nearly identical for instances where the player guesses the whole answer, with just a slight change in wording.  
+
+- Player loses
 
 ![lose](documentation/images/13_player-loses.PNG)
 - in each case, the player is referred to the fan wiki "Wookipedia" to either find out more (if they won) or look up the answer (if they lost)
 - in both cases, they can either play again or return to the homepage
 - if the player loses, they can look at the leaderboard but not update it
-- if the player wins, they can update the leaderboard; if they choose this option, it triggers an input field so they can enter their name. After that, they will be directed to the leaderboad where they can see the answer they guessed, and how many attempts are remaining
+- if the player wins, they can update the leaderboard; if they choose this option, it triggers an input field so they can enter their name. After that, they will be shown the leaderboad where they can see the answer they guessed, and how many attempts were remaining when they won.
+
 ![input-name](documentation/images/17_leaderboard-name.PNG)
 
 ## The Leaderboard 
-This was the last section of the app I put together. I created it for two reasons: 
+This was the last feature of the app I put together. I created it for two reasons: 
 - It's a good gameplay feature to include 
 - I also wanted to practise exporting the results to an external spreadsheet as this is a common real-life request when, e.g. tracking sales, customer contacts etc.  
 
-The functionality is reas
+Here are the two functions: 
+
+![leaderboard-code](documentation/images/18_leaderboard-code.PNG)
 
 
+As indicated in my comments in the code, the 'leaderboard_page' calls the relevant information stored in the spreadsheet and prints the name, guessed word and number of remaining attempts.  The 'update_leaderboard' updates a new row of the worksheet with the player's name (inputted by the player themself), the guessed word and the number of remaining attempts.  
 
-## Testing
+A note on the 'remaining attempts' column: the higher the number, the better you have done. This counts the number of remaining 'incorrect guesses' the player had when they solved the answer. 
+
+If I were to work on this more, I would
+- count the number of total guesses, correct and incorrect
+- number of available attempts, so instances of games in which only 6 attempts are allowed could be separated out from those in which 10 are allowed.  
+
+
+# Testing
+
+These tests were conducted within the GitPod terminal and in the Heroku terminal.
 
 | Test                                              | Expected outcome                                    | Result |
 | ------------------------------------------------- | --------------------------------------------------- | ------ |	
@@ -246,6 +302,18 @@ The functionality is reas
 
 TO BE COMPLETED 
 
+## Pep8 Validation
+The code passes Pep8 validation. I had to use this solution for the leaderboard page which had one very long string that runs over three lines, but this was accepted by the CI Python Linter and is functional in the game, so it seems like a good solution:
+https://stackoverflow.com/questions/1874592/how-to-write-very-long-string-that-conforms-with-pep8-and-prevent-e501
+
+## Future development
+
+- The next step for me would be to add difficulty levels, with the hardest being limiting the player to a total number of correct and incorrect guesses, rather than, as here, a situation in which correct guesses are not counted. This would make the game more challenging. 
+- I would like to update the leaderboard to count the total number of guesses per successful game, as well as the 'remaining attempts' (i.e. remaining wrong guesses) which is currently counted.
+- I would also specify how many attempts were available to the player, e.g. was it a game with 10 available attempts, or just 6
+- I would also like to export the information for all completed games, successful or unsuccessful, as this is a likely 'real-life' feature that would be desirable, if not necessary 
+- Cosmetically, some Ascii Art would be desirable
+- If this were to be developed in much futher depth, a difficulty weighting could be developed whereby a name like Darth Vador would have a difficulty weighting of 1, i.e. the easiest, and Kleya Marki a difficulty level of 10, i.e. the most difficult. Collecting this data and weighting it would be a substantial project in itself, and probably not possible without access to commercial / propietory databases, but it would be a nice way to enhance the leaderboard, with obscure answers guessed in minimal number of total attempts getting maximum points. 
 
 
 
