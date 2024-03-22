@@ -189,8 +189,10 @@ def play_the_game():
                 else:
                     myprint("No target found: please enter 1, 2, or 3.\n")
                 break
+            
             else:
                 attempts -= 1
+                myprint("Missed! Try again:", attempts, "shots left \n")
                 continue
 
         """
