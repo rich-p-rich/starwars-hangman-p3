@@ -77,11 +77,11 @@ Gameplay section
 def import_word(answers):
     """
     Import random word from the answers sheet: converts letters
-    to lower case, removes trailing blanks that may exist in the 
+    to lower case, removes trailing blanks that may exist in the
     source google spreadsheet
     """
-    word = random.choice(answers).lower().strip() 
-    return word # this is the target to be guessed
+    word = random.choice(answers).lower().strip()
+    return word  # this is the target to be guessed
 
 
 def get_clue1(answer):
@@ -117,21 +117,21 @@ def play_the_game():
     guessed_characters = set()  # monitors guesses in case user repeats a guess
     wrong_guesses = set()  # monitors wrong guesses to display them to the user
     invalid_characters = [' ', '#', '*', '<', '>', ':', ';', '(', ')', '+',
-                          '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}'] 
+                          '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
     clue1_used = False  # this tracks whether clue1 has been used or not
-    clue2_used = False  # this tracks whether clue2 has been used or not 
+    clue2_used = False  # this tracks whether clue2 has been used or not
 
     """
     This sets the nr of wrong guesses the user is allowed.
-    This is based on total nr of characters in the target and can be changed here
-    if required.
+    This is based on total nr of characters in the target.
+    The variable can be changed here if required.
     """
     if len(word) <= 6:
         attempts = 6
     else:
         attempts = 10
 
-    attempts_used = len(word) - attempts # calculate nr of attempts used
+    attempts_used = len(word) - attempts  # calculate nr of attempts used
     total_guesses = 0
 
     myprint("Your target:", ' '.join(hidden_word))
@@ -154,12 +154,12 @@ def play_the_game():
         total_guesses += 1
 
         """
-        Conditions for guessing the whole answer using the ! 
+        Conditions for guessing the whole answer using the !
         """
         if guess.startswith('!'):
             guess = input("Guess the whole answer: ").lower()
-            if guess == word:
-                myprint("Great shot kid! That was one in a million:", word) # player wins with a guess
+            if guess == word:    # player wins with a guess
+                myprint("Great shot kid! That was one in a million:", word)
                 myprint("Want to find out more?\n")
                 myprint("Look it up on Wookieepedia:\n")
                 myprint("https://starwars.fandom.com/wiki/Main_Page\n")
@@ -178,7 +178,7 @@ def play_the_game():
                     return
                 elif option == '2':
                     myprint("Get ready for your award ceremony! \n")
-                    name = input("Enter your name: ")  
+                    name = input("Enter your name: ")
                     update_leaderboard(name, word, attempts)
                     leaderboard_page()
                     return
@@ -191,7 +191,6 @@ def play_the_game():
                 break
             else:
                 attempts -= 1
-                myprint(f"Missed! Try again: {attempts_used} out of {len(word)} attempts used") # player's guess whole answer was wrong
                 continue
 
         """
@@ -223,10 +222,11 @@ def play_the_game():
             continue
 
         """
-        Ensure the user enters only 1 charaacter
-        except for ?? and whole answer guesses
+        This ensures the user enters only 1 charaacter
+        except for ?? and whole answer guesses.
+        This also makes hitting the enter key on its own an invalid input
         """
-        if len(guess) != 1:  # this makes hitting the return key on its own an invalid input
+        if len(guess) != 1:
             myprint("Invalid input! Enter a single character\n")
             myprint("or enter an ! and guess the whole answer.\n")
             continue
@@ -234,15 +234,13 @@ def play_the_game():
         """
         Checks if the user is repeating a guess
         and reminds them if they are; modifies the variable
-        guessed_characters (declared in the play_the_game function at line 116)
+        guessed_characters (declared in the play_the_game function)
         """
         if guess in guessed_characters:
             myprint("You've taken that shot already - try something else!")
             continue
 
         guessed_characters.add(guess)
-        
-
         """
         Checks guess against answer, react accordingly
         Stores wrong guesses and displays them to player
@@ -259,8 +257,8 @@ def play_the_game():
             myprint("Missed shots:", ' '.join(sorted(wrong_guesses)))
 
         myprint("Your target:", ' '.join(hidden_word))
-        if '_' not in hidden_word:
-            myprint("Great shot kid! That was one in a million:", word)  # player wins
+        if '_' not in hidden_word:   # player wins
+            myprint("Great shot kid! That was one in a million:", word)
             myprint("Want to find out more?\n")
             myprint("Look it up on Wookipedia:\n")
             myprint("https://starwars.fandom.com/wiki/Main_Page\n")
@@ -290,7 +288,6 @@ def play_the_game():
             else:
                 myprint("No target found: please enter 1, 2, or 3.\n")
             break
-            
 
     if attempts == 0:
         myprint("Oh no! The Death Star has won!")  # player loses
@@ -326,23 +323,21 @@ def play_the_game():
         else:
             myprint("No target found: please enter 1, 2, or 3.\n")
 
-            
+
 def leaderboard_page():
     """
-    Display the leaderboard and prompt the player to input their name
+    Displays the leaderboard and prompts the player to input their name
     """
-    
     leaderboard_sheet = SHEET.worksheet('leaderboard')
     leaderboard_data = leaderboard_sheet.get_all_records()
     myprint("Leaderboard:")
     for entry in leaderboard_data:
-        myprint(f"Player: {entry['Name']}, Guessed Word: {entry['Guessed Word']}, Number of Guesses: {entry['Number of Guesses']}")
-    
+        myprint(f"Player: {entry['Name']}, Guessed Word:{entry['Guessed Word']}, Number of Guesses:{entry['Number of Guesses']}")
+
 
 def clear_terminal():
     """
-    Set up homescreen
-    The user chooses to play the game or read the gameplay instructions
+    This is a clear screen function for the homescreen
     """
     if os.name == 'nt':  # for Windows
         os.system('cls')
@@ -351,6 +346,11 @@ def clear_terminal():
 
 
 def display_homescreen():
+    """
+    This function sets up the up homescreen
+    The user chooses to play the game, view leaderboard, or
+    read the gameplay instructions
+    """
     myprint('Welcome to Starwars Hangman!\n')
     myprint('Save your homeworld by guessing the missing name before\n')
     myprint('the Death Star is in range!\n')
@@ -370,7 +370,7 @@ def display_homescreen():
             play_the_game()
         elif option == '2':
             myprint("Leaderboard loading ...\n")
-            leaderboard_page()            
+            leaderboard_page()
         elif option == '3':
             myprint("Loading up the Death Star plans now ...\n")
             clear_terminal()
@@ -381,19 +381,21 @@ def display_homescreen():
 
 def leaderboard():
     """
-    Function to update and display the leaderboard
+    Updates and displays the leaderboard in the terminal and the spreadsheet
     """
     leaderboard_sheet = SHEET.worksheet('leaderboard')
     leaderboard_data = leaderboard_sheet.get_all_records()
     myprint("Leaderboard:")
     for entry in leaderboard_data:
         myprint(f"Player: {entry['Name']}, Guessed Word: {entry['Guessed Word']}, Attempts: {entry['Attempts']}")
-    
+
+
 def update_leaderboard(name, word, attempts):
     """
-    Function to update the leaderboard with the player's information
+    This function updates the leaderboard with the player's information
     """
     leaderboard_sheet = SHEET.worksheet('leaderboard')
     leaderboard_sheet.append_row([name, word, attempts])
+
 
 display_homescreen()
