@@ -190,7 +190,7 @@ def play_the_game():
                     myprint("No target found: please enter 1, 2, or 3.\n")
                 break
             
-            else:
+            else:  # Player's guess for the whole answer is wrong
                 attempts -= 1
                 myprint("Missed! Try again:", attempts, "shots left \n")
                 continue
@@ -340,6 +340,8 @@ def leaderboard_page():
 def clear_terminal():
     """
     This is a clear screen function for the homescreen
+    I took the code from Stack Overflow question 76955384
+    -> full link in the ReadMe    
     """
     if os.name == 'nt':  # for Windows
         os.system('cls')
