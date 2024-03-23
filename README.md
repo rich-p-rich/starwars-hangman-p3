@@ -41,7 +41,6 @@ Here is how I sketched out the game using Lucid Chart:
 
 # How the app works: overview
 
-
 As things stand now: the app / game works as follows: 
 - all data for the answers, clues 1 and 2 is stored in the same worksheet in a linked google spreadsheet 
 - details for the leaderboard are exported to the same spreadsheet but in a different worksheet and can be added to / viewed within the terminal at the player's request 
@@ -402,7 +401,6 @@ Final PEP8 validation feedback: all clear (23.03.2024  17:43):
 ![pep8](documentation/images/pep8ci_all-clear_230324_1743.PNG)
 
 
-
 ## Future development
 - In terms of coding: there are definitely places where I could consolidate my code to avoid repitition. For example, it would be possible to merge the code for Clue1 and Clue2, and I think the code for the end-game screen could be consolidated to help maintainability. This would be my priority if I come back to this game.   
 - In terms of gameplay, the next step would be to add difficulty levels, with the hardest being limiting the player to a total number of correct and incorrect guesses, rather than, as here, a situation in which correct guesses are not counted. This would make the game more challenging. 
@@ -414,7 +412,9 @@ Final PEP8 validation feedback: all clear (23.03.2024  17:43):
 - If this were to be developed in much futher depth, a difficulty weighting could be developed whereby a name like Darth Vador would have a difficulty weighting of 1, i.e. the easiest, and Kleya Marki a difficulty level of 10, i.e. the most difficult. Collecting this data and weighting it would be a substantial project in itself, and probably not possible without access to commercial / propietory databases, but it would be a nice way to enhance the leaderboard, with obscure answers guessed in minimal number of total attempts getting maximum points. 
 
 # Deployment to Heroku
-I deployed to Heroku on 7th March 2024, i.e. as soon as possible during the development of this game. I did this following much of the advice and feedback I saw in the Slack communitiy as well as the official guidance. Since then, I have been testing the app in both the GitPod terminal and Heroku. As with the API, I followed the advice in the LoveSandwiches project step-by-step to ensure a successful deployment. The key steps were:
+This is the link to my deployment on Heroku: https://starwars-hangman-p3-db2400815a43.herokuapp.com/
+
+I deployed to Heroku on 7th March 2024, i.e. as soon as possible during the development of this game.  I did this following much of the advice and feedback I saw in the Slack communitiy as well as the official guidance. Since then, I have been testing the app in both the GitPod terminal and Heroku. As with the API, I followed the advice in the LoveSandwiches project step-by-step to ensure a successful deployment. The key steps were:
 - set up my Heroku account
 - connected GitHub to Heroku
 - supplied my payment details and and school details (the Code Institute)
