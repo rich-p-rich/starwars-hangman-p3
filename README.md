@@ -1,6 +1,6 @@
 # Welcome to Star Wars Hangman! 
 
-For project three I decided to develop a Star Wars version of the hangman game, based on the films and TV shows. I chose this because I enjoy word word games and have been a Star Wars fan for as long as I can remember. This game brings both of those passions together and I have really enjoyed developing, testing and playing this game. 
+For project three I decided to develop a Star Wars version of the hangman game, based on the films and TV shows. I chose this because I enjoy word games and have been a Star Wars fan for as long as I can remember. This game brings both of those passions together and I have really enjoyed developing, testing and playing this game. 
 
 ## User Demographic
 This game is aimed primarily at the following:
@@ -17,7 +17,7 @@ The purpose of the game is:
 # What's so Star Wars-y about this game? 
 - The answers are all taken from the so-called 'canon' Star Wars films and TV shows released by George Lucas and from the Disney Era
 - The answer could be anything from the Star Wars universe: a character, droid, ship, vehicle, weapon, type of trooper (stormtrooper, dark trooper, clone trooper), creature, planet, place or an alien species
-- I have tried to give the messages a 'Star Wars' flavour, e.g. 'starting your attack run ...' when starting a game, or 'Loading up the Death Star plans now ...' when the player chooses to view the gameplay
+- I have tried to give the messages a 'Star Wars' flavour, e.g. 'starting your attack run ...' when starting a game, or 'Loading up the Death Star plans now ...' when the player chooses to view the gameplay instructions. 
 - If I were to come back to this, I would try to implement some Ascii Art to illustrate the gameplay with Star Wars-style images, but I could not do that this time. 
 
 # Hangman Rules and Variants
@@ -92,7 +92,7 @@ I imported the modules listed in the screenshot:
 
 ## MyPrint
 
-I created a myprint for the Heroku terminal rather than using the standard 'print' because I wanted to give the terminal a left margin. I the text in the Heroku terminal difficult to read with the standard 'print' function so added a basic left margin with a new 'myprint' function coded as follows: 
+I created a 'myprint' function for the Heroku terminal rather than using the standard 'print' because I wanted to give the terminal a left margin. I the text in the Heroku terminal difficult to read with the standard 'print' function so added a basic left margin with a new 'myprint' function coded as follows: 
 
 ![MyPrint](documentation/images/2_myprint.PNG)
 
@@ -105,9 +105,7 @@ This is a sequence of statements added with myprint to explain the gameplay. I t
 
 ![Gameplay](documentation/images/3_gameplay_explanation.PNG)
 
-I added a 'clear screen' function here because I found the terminal too cramped when I went from the homescreen to the gameplay explanation. 
-
-I found a solution on Stack Overflow which I used in my code - this is the source:
+I added a 'clear screen' function here because I found the terminal too cramped when I went from the homescreen to the gameplay explanation. I used this solution from Stack Overflow which I used for the 'clear screen' - this is the source:
 https://stackoverflow.com/questions/76955384/how-to-clear-the-screen-in-python-when-a-certain-condition-is-met-when-execution
 
 ![Clear Terminal](documentation/images/3a_clear-screen.PNG)
@@ -126,7 +124,7 @@ I then applied the same approach to the imported clues:
 ![Import-clues](documentation/images/5_import-clues.PNG)
 
 For my own sake, it took some mental processing to understand how to import the correct clues based on the answer, but the process works reliably. As I understand the get_clue functions and would explain them: 
-- the first line clue1_data refers to the linked spreadsheet 
+- the first line of the function, starting with 'clue1_data', calls the information from the google doc
 - for row in clue1 data: word = row[0]: this refers to the target word that I am importing from the google doc and displaying the to player as underscores
 - this 'word' has to be the same as the 'answer' parameter which is shown in parentheses = the target word which is shown to the player as underscores 
 - as these have to be the same, row [1] (for Clue 1) has to refer to Clue1 in the linked spreadsheet, and row[2] has to refer to Clue2
@@ -137,16 +135,18 @@ For my own sake, it took some mental processing to understand how to import the 
 I cover the functionality around calling the clues in the 'Clues' section of this ReadMe below. 
 
 ## Setting up the game 
-In this section I have defined some of the main variables for playing the game:
+In this section I define some of the main variables for playing the game:
 
 ![Gameplay-variables](documentation/images/6_gameplay-and-variables.PNG)
 
 Some clarifications: 
-- Spaces, apostrophes and hyphens. I wanted to display hyphens, apostrophes and spaces as they are rather than hidden as underscores. I thought that asking the player to guess hyphens and apostrohes a little unfair, and would be inaccurate to some of the source material - I didn't want to display x wing or xwing which it is correctly x-wing. Additionally, showing spaces between words seemed only fair, which is why I added these three exceptions to the underscores here. 
+- Spaces, apostrophes and hyphens. I wanted to display hyphens, apostrophes and spaces as they are, rather than hidden by underscores. I thought that asking the player to guess hyphens and apostrohes a little unfair, and would be inaccurate to some of the source material - I didn't want to display x wing or xwing which it is correctly x-wing. Additionally, showing spaces between words seemed only fair, which is why I added these three exceptions to the rule which hides all characters by underscores. 
 - Guessed characters: I did not want to penalise the player who repeated a guess by mistake, so this variable keeps track of what they have guessed - correctly or incorrectly - and gives them a reminder in this case; additionally, they do not lose any attempts for repeated guesses. 
 In this example, the player enters the letter Z twice, and gets the reminder on the second attempt:
+
 ![Repeat-guess](documentation/images/15_repeat-wrong-guess.PNG)
 - Wrong guesses: to help the player keep track of where they are in the game, I use this variable to monitor their wrong guesses so I can display them to the player. I considered adding all guesses to this list, but as the correctly-guessed characters appear in the target word(s), this seemed redundant. 
+
 ![List-wrong-guesses](documentation/images/16_list-wrong-guesses.PNG)
 - Invalid characters: it would be easy to lose an attempt by accidently entering a semi-colon, hash sign or asterisk, so I have excluded them where; if the user enters an invalid character, they get a warning message but they do not lose an attempt. 
 
@@ -313,6 +313,7 @@ https://stackoverflow.com/questions/1874592/how-to-write-very-long-string-that-c
 - I would also specify how many attempts were available to the player, e.g. was it a game with 10 available attempts, or just 6
 - I would also like to export the information for all completed games, successful or unsuccessful, as this is a likely 'real-life' feature that would be desirable, if not necessary 
 - Cosmetically, some Ascii Art would be desirable
+- Additionally, I would set up a 'myinput' function to add a left margin to the input commands as well as the myprint statements. 
 - If this were to be developed in much futher depth, a difficulty weighting could be developed whereby a name like Darth Vador would have a difficulty weighting of 1, i.e. the easiest, and Kleya Marki a difficulty level of 10, i.e. the most difficult. Collecting this data and weighting it would be a substantial project in itself, and probably not possible without access to commercial / propietory databases, but it would be a nice way to enhance the leaderboard, with obscure answers guessed in minimal number of total attempts getting maximum points. 
 
 
