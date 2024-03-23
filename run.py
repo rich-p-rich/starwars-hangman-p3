@@ -111,7 +111,8 @@ def play_the_game():
     guessed_characters = set()  # monitors guesses in case user repeats a guess
     wrong_guesses = set()  # monitors wrong guesses to display them to the user
     invalid_characters = [' ', "'", '#', '*', '<', '>', ':', ';', '(', ')',
-                          '+', '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}']
+                          '+', '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}',
+                           ',', '.', '_', '&', '$', '§', '"']
     clue1_used = False  # this tracks whether clue1 has been used or not
     clue2_used = False  # this tracks whether clue2 has been used or not
 
@@ -364,7 +365,7 @@ def display_homescreen():
             clear_terminal()
             how_to_play()
         else:
-            myprint("No target found: please enter 1 or 2.\n")
+            myprint("No target found: please enter 1, 2 or 3.\n")
 
 
 def leaderboard_page():
