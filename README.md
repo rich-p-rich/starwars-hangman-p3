@@ -1,6 +1,6 @@
 # Welcome to Star Wars Hangman! 
 
-For project three I decided to develop a Star Wars version of the hangman game, based on the films and TV shows. I chose this because I enjoy word games and have been a Star Wars fan for as long as I can remember. This game brings both of those passions together and I have really enjoyed developing, testing and playing this game. 
+For project three I decided to develop a Star Wars version of the hangman game that is based on the films and TV shows, encompassing everything from the original trilogy to current day productions. I chose this because I enjoy word games and have been a Star Wars fan for as long as I can remember. This game brings both of those passions together and I have really enjoyed developing, testing and playing this game. 
 
 ## User Demographic
 This game is aimed primarily at the following:
@@ -43,7 +43,7 @@ Here is how I sketched out the game using Lucid Chart:
 
 
 As things stand now: the app / game works as follows: 
-- all data for the answers, clues 1 and 2 are stored in the same worksheet in a linked google spreadsheet 
+- all data for the answers, clues 1 and 2 is stored in the same worksheet in a linked google spreadsheet 
 - details for the leaderboard are exported to the same spreadsheet but in a different worksheet and can be added to / viewed within the terminal at the player's request 
 - from the homescreen, the user can choose to play the game, view the leaderboard or read the rules by entering 1, 2 or 3 on their keyboard (no other options are allowed)
 - if the player chooses 1, the gameplay starts 
@@ -77,7 +77,7 @@ _ _ _ _ _ '_  _ _ _ _ _ _ (jabba's palace)
 
 I closely followed the guidelines explained in the 'Love Sandwiches' walk-though project in order link the Google Doc to this game. Essentially I set up the link to Google Drive as follows: 
 - go to Google Cloud Platform
-- select project -> create new project -> name it
+- select project -> create new project -> name it: in this case, starwars-hangman-p3
 - go to project page 
 - API and services -> library -> enable Google Drive and Google Sheets 
 - Set role as Editor
@@ -91,13 +91,20 @@ Again, I followed the 'Love Sandwiches' walkthough here:
 - shared the client email with my data spreadsheet, and enabled function as editor 
 - add creds.json to the git.ignore folder so that it would not be shared to github to ensure privacy  
 
+## The spreadsheet: starwars_hangman
+This is a read-only link to the spreadsheet that I used for the game: https://docs.google.com/spreadsheets/d/1s2Sdv2Cj6v-hUnXD9Wr84nehteS9X3BuBctTleoWaK8/edit?usp=sharing
+
+The set-up for a hangman game is fairly simple: 
+- in the 'answers' sheet, there are three relevant columns: the answer, i.e. the target word that the player has to guess, then clue 1 and clue 2.  
+- I populated this sheet myself: as a long-term fan, I enjoyed doing this! 
+- this sheet simply supplies data to the game and is not updated by the game
+- in the leaderboard sheet, there is the player's name which they enter in the terminal, the name they guessed and how many wrong attempts were remaining.
+- I both call information from this sheet to display the leaderboard, and update it when the successful player chooses to do so. It is updated when the player chooses to add their name, and the .append method adds their name as well as the guessed answer and number of attempts to the worksheet. 
+
 ## Setting up access to the spreadsheet data
 
 This section also closely follows the 'Love Sandwiches' walkthrough by adding the scope and credentials needed to access the spreadsheet, call data from it and pass data to it.  
-
-My 'starwars_hangman' Google Doc stores all the answers in column A of the 'answers' worksheet. Clue 1 is stored in column B and Clue 2 in column C. I entered the information myself (as a long-term fan, this was fun!) and added the information for Clues 1 and 2 myself. This is currently 'export only' in that the game calls information from it, but does not update it. 
-
-The second worksheet is the 'leaderboard': I both call information from it to display the leaderboard, and update it when the successful player chooses to do so. It is updated when the player chooses to add their name, and the .append method adds their name as well as the guessed answer and number of attempts to the worksheet.  
+ 
 
 ![Linking the google doc](documentation/images/1_api-and-links.PNG)
 
@@ -334,8 +341,8 @@ The code passes Pep8 validation. I had to use this solution for the leaderboard 
 https://stackoverflow.com/questions/1874592/how-to-write-very-long-string-that-conforms-with-pep8-and-prevent-e501
 
 ## Future development
-
-- The next step for me would be to add difficulty levels, with the hardest being limiting the player to a total number of correct and incorrect guesses, rather than, as here, a situation in which correct guesses are not counted. This would make the game more challenging. 
+- In terms of coding: there are places in which I could consolidate my code to avoid repitition. For example, it would be possible to merge the code for Clue1 and Clue2, and I think the code for the end-game screen could be consolidated to help maintainability. This would be my priority if I come back to this game.   
+- In terms of gameplay, the next step would be to add difficulty levels, with the hardest being limiting the player to a total number of correct and incorrect guesses, rather than, as here, a situation in which correct guesses are not counted. This would make the game more challenging. 
 - I would like to update the leaderboard to count the total number of guesses per successful game, as well as the 'remaining attempts' (i.e. remaining wrong guesses) which is currently counted.
 - I would also specify how many attempts were available to the player, e.g. was it a game with 10 available attempts, or just 6
 - I would also like to export the information for all completed games, successful or unsuccessful, as this is a likely 'real-life' feature that would be desirable, if not necessary 
