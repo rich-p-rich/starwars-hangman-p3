@@ -73,7 +73,27 @@ _ _ _ _ _ '_  _ _ _ _ _ _ (jabba's palace)
 
 # App functionality: in depth
 
-## Data Model: The Google Doc and API
+## Setting up the API to Google Drive
+
+I closely followed the guidelines explained in the 'Love Sandwiches' walk-though project in order link the Google Doc to this game. Essentially I set up the link to Google Drive as follows: 
+- go to Google Cloud Platform
+- select project -> create new project -> name it
+- go to project page 
+- API and services -> library -> enable Google Drive and Google Sheets 
+- Set role as Editor
+- Generate credentials -> manage account services -> Keys 
+- Create JSON file with the private Key and download 
+- I then enabled the API for Google sheets and downloaded the JSON file for that as well
+
+## Adding and Sharing Credentials
+Again, I followed the 'Love Sandwiches' walkthough here:
+- I added the JSON files to my GitPod workspace 
+- shared the client email with my data spreadsheet, and enabled function as editor 
+- add creds.json to the git.ignore folder so that it would not be shared to github to ensure privacy  
+
+## Setting up access to the spreadsheet data
+
+This section also closely follows the 'Love Sandwiches' walkthrough by adding the scope and credentials needed to access the spreadsheet, call data from it and pass data to it.  
 
 My 'starwars_hangman' Google Doc stores all the answers in column A of the 'answers' worksheet. Clue 1 is stored in column B and Clue 2 in column C. I entered the information myself (as a long-term fan, this was fun!) and added the information for Clues 1 and 2 myself. This is currently 'export only' in that the game calls information from it, but does not update it. 
 
@@ -141,6 +161,7 @@ In this section I define some of the main variables for playing the game:
 
 Some clarifications: 
 - Spaces, apostrophes and hyphens. I wanted to display hyphens, apostrophes and spaces as they are, rather than hidden by underscores. I thought that asking the player to guess hyphens and apostrohes a little unfair, and would be inaccurate to some of the source material - I didn't want to display x wing or xwing which it is correctly x-wing. Additionally, showing spaces between words seemed only fair, which is why I added these three exceptions to the rule which hides all characters by underscores. 
+
 - Guessed characters: I did not want to penalise the player who repeated a guess by mistake, so this variable keeps track of what they have guessed - correctly or incorrectly - and gives them a reminder in this case; additionally, they do not lose any attempts for repeated guesses. 
 In this example, the player enters the letter Z twice, and gets the reminder on the second attempt:
 
@@ -148,7 +169,7 @@ In this example, the player enters the letter Z twice, and gets the reminder on 
 - Wrong guesses: to help the player keep track of where they are in the game, I use this variable to monitor their wrong guesses so I can display them to the player. I considered adding all guesses to this list, but as the correctly-guessed characters appear in the target word(s), this seemed redundant. 
 
 ![List-wrong-guesses](documentation/images/16_list-wrong-guesses.PNG)
-- Invalid characters: it would be easy to lose an attempt by accidently entering a semi-colon, hash sign or asterisk, so I have excluded them where; if the user enters an invalid character, they get a warning message but they do not lose an attempt. 
+- Invalid characters: it would be easy to lose an attempt by accidently entering an apostrophe, hash sign or asterisk, so I have excluded them where; if the user enters an invalid character, they get a warning message but they do not lose an attempt. 
 
 This is the code that displays the corresponding error message: 
 
@@ -159,7 +180,9 @@ This is the code that displays the corresponding error message:
 
 ## Number of attempts
 
-I decided to implement a variable that allows the owner of the game to adapt the number of wrong guesses allowed per game. This is based on the length of the word: some names are very short, e.g. Rey, R2-D2, but I didn't want to exclude them as possible target answers. Equally, it seemed a bit unfair to have 10 attempts for this word - the same number as for 'Salacious B Crumb' - which is why I added this variable.  
+I decided to implement a variable that allows the owner of the game to adapt the number of wrong guesses allowed per game. This is based on the length of the word: some names are very short, e.g. Rey, R2-D2, but I didn't want to exclude them as possible target answers. Equally, it seemed a bit unfair to have 10 attempts for a three-letter word as for something like 'Salacious B Crumb', which is why I added this variable.  
+
+Having said that, some of the shorter words are more difficult to guess as there are fewer cues to rely on to get them right, but I think on balance it is fair to get fewer attempts for much shorter words.  
 
 ![Nr-attempts](documentation/images/7_nr-attempts.PNG)
 
@@ -180,26 +203,30 @@ This allows me to enforce the 'one-character-at-a-time' Hangman rule, but also a
 
 As the Star Wars universe is quite vast, and the types of answers could include anything form planets to characters to creatures to spaceships, I decided to implement a 'get a clue' function: 
 - clue 1 tells the player what the target is: whether it is a spaceship, character etc
-- clue 2 tells the player in what series of films or TV shows the answer is most commonly found, e.g. The Original Trilogy, The Mandalorian, Kenobi, etc; if the answer is found in more than one series, I let the clue show the most common series the answer is found in, e.g. The Prequels and The Clone Wars.  
+- clue 2 tells the player in what series of films or TV shows the answer is most commonly found, e.g. The Original Trilogy, The Mandalorian, Kenobi, etc; if the answer is found in more than one series, the clue will show multiple sources, e.g. The Prequels and The Clone Wars, or Rebels, Ahsoka and The Mandalorian.  
 - each clue uses up one attempt 
 - the player cannot get clue 2 until they have asked for clue 1: if they try, they get an error message but do not lose any attempts.
+
 ![Clue-1-first](documentation/images/10a_clue-1-first.PNG)
 
 - if the player repeats a request for a clue, they do not lose any attempts. I found during testing that I would sometimes accidently enter ? rather than ?? when asking for clue 2, which is why I implemented this safety-net.
+
 ![Clue-repeat](documentation/images/10b_clue-repeat.PNG)
 
 ## Standard gameplay: 1 character only
-In order to enforce the Hangman rule of 1 character per guess, I wrote this code to check the length of the input; with the exception of two question marks, this returns an error message if the player enters multiple characters. Additionally, it disables the possibility that the user enters a blank string by hitting the enter key; this issue with the enter key was a problem that I resolved with the help of my tutor, as I found it difficult to describe exactly what the enter key did, and therefore how to exclude it:
+In order to enforce the Hangman rule of 1 character per guess, I wrote this code to check the length of the input; with the exception of entering two question marks for clue 2, this returns an error message if the player enters multiple characters. Additionally, it disables the possibility that the user enters a blank string by hitting the enter key; this issue with the enter key was a problem that I resolved with the help of my tutor, as I found it difficult to describe exactly what the enter key did, and therefore how to exclude it. But now if you hit enter without any actual input, you are shown 'invalid attempt.'  
+
 ![1-char-only](documentation/images/11_1-char-only.PNG)
 
 ## Standard gameplay: correct and incorrect guesses 
 Having covered the exceptions to the rules, we now come to the standard gameplay section. This is the code which governs what happens when the player guesses a single character:
+
 ![standard-play](documentation/images/12_standard-play.PNG)
 
 If the guess is correct, each instance of its appearance in the word will be populated.
 If the guess is incorrect, the the number of attempts is reduced by one, the guess is entered to the 'wrong guesses' list, and the user is told (i) the guess was wrong and (ii) how many attempts they have left.  
 
-## End of game, win or lose
+## End of game: win or lose
 The functionality at the end of the game is basically the same regardless of whether the player wins or loses, with a couple of divergences:
 - Player wins
 
