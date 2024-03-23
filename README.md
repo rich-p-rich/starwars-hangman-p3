@@ -334,14 +334,66 @@ These tests were conducted within the GitPod terminal and in the Heroku terminal
 
 ## Bugs
 
-TO BE COMPLETED 
+I encountered many bugs during the development of this game. The majority of them were to do with the implementation of the game logic, particularly when I added new features which led to old features being moved further down or up the code, or simply that the new feature was not optimally placed to make it work. A few of the more notable ones are listed here. 
+
+- Homepage. When I first set up the homepage, I neglected to restore the input field when the user entered anything other than the permitted characters:
+
+![bug-input-inactive](documentation/bugs/input-field-inactive.PNG)
+
+I fixed this by framing the options in a while-loop in order to keep the input field alive until the user entered a valid input. Before I added the loop, the code did not allow for the input field to be shown after an invalid entry: 
+
+![bug-input-inactive](documentation/bugs/input-field-inactive_code.PNG)
+
+- Clues. The clues were in fact the part I found the most difficult to set up, and hence were the most buggy; part of this was due to coding inexperience, and part of it was due to poor coding logic.
+
+- This bug was due to code inexperience: when I first set up the code, it turned out that I was describing the function rather than calling it. My tutor pointed this out during one of our meetings and I could fix it by calling it, i.e. "get_clue1()" rather than so "get_clue1". A simple fix, but one I needed help with.
+
+![bug-describe-function](documentation/bugs/clue1_describing-function.PNG)
+
+- I had another issue with the code logic that meant no attempts were lost when I called the clues
+
+![bug_clue1-no-reduction](documentation/bugs/clue1_no-reduction.PNG)
+
+The problem was to do with my order of operations. Originally I was providing the clue before decrementing the number of attempts:
+
+![bug_clue1-no-reduction](documentation/bugs/clue1_no-reduction_code.PNG)
+
+So simply swapping the order around so that after the user asked for the clue, I first decremented the number of attempts and then gave the clue was the fix that was needed.
+
+- Faulty order of operations was also the reason why, in the first deloyment of my Clue 2 code, 
+
+![bug_clue2-many-errors](documentation/bugs/clue2-multiple-errors.PNG)
+
+I clear this up by simply moving the multiple characters check to follow the ?? input, and it worked fine.  
+
+- Input from the enter key. I noticed during testing that, if I pressed the enter key on its own without any extra input, it would use up an attempt. I did not understand that pressing the enter key enters an empty string. With the help of my tutor, I adjusted the following code that I originally designed to stop the users from entering more than one character at a time. Before the fix I had this:
+
+![bug_enter-key](documentation/bugs/enter-key-attempt.PNG)
+
+As we discussed during our meeting, my tutor pointed out that I was focusing on what I wanted to stop the player from doing, rather than what I wanted them to do. So in the fix, the code tells the player to enter one character, rather than not to enter more than one character
+
+![bug_enter-key](documentation/bugs/enter-key-attempt_fix.PNG)
+
+
+- The final bug was to do with my attempt to concatenate a long line of code in order for it to fit the Pep8 Linter. After splittling the relevant line of code so it conformed to the character limit per line, I could not longer access the information in the leaderboard table:
+
+![bug_concat-display-1](documentation/bugs/concat.code.PNG)
+
+I had split the code as follows:
+
+![bug_concat-display-2](documentation/bugs/concat.code_gitpod.PNG)
+
+As you can see, I did not properly end each line of the string. This was then the fix:
+
+![bug_concat-display-2](documentation/bugs/concat.code_gitpod_fix.PNG)
+
 
 ## Pep8 Validation
 The code passes Pep8 validation. I had to use this solution for the leaderboard page which had one very long string that runs over three lines, but this was accepted by the CI Python Linter and is functional in the game, so it seems like a good solution:
 https://stackoverflow.com/questions/1874592/how-to-write-very-long-string-that-conforms-with-pep8-and-prevent-e501
 
 ## Future development
-- In terms of coding: there are places in which I could consolidate my code to avoid repitition. For example, it would be possible to merge the code for Clue1 and Clue2, and I think the code for the end-game screen could be consolidated to help maintainability. This would be my priority if I come back to this game.   
+- In terms of coding: there are definitely places where I could consolidate my code to avoid repitition. For example, it would be possible to merge the code for Clue1 and Clue2, and I think the code for the end-game screen could be consolidated to help maintainability. This would be my priority if I come back to this game.   
 - In terms of gameplay, the next step would be to add difficulty levels, with the hardest being limiting the player to a total number of correct and incorrect guesses, rather than, as here, a situation in which correct guesses are not counted. This would make the game more challenging. 
 - I would like to update the leaderboard to count the total number of guesses per successful game, as well as the 'remaining attempts' (i.e. remaining wrong guesses) which is currently counted.
 - I would also specify how many attempts were available to the player, e.g. was it a game with 10 available attempts, or just 6
@@ -367,4 +419,27 @@ I deployed to Heroku on 7th March 2024, i.e. as soon as possible during the deve
 
 # Credits
 
+As usual, my tutor Dick Vlaanderen was a great help: he was very patient, very clear, and steered me in the right direction. The tutoring team helped me with some of the issues I faced with this project and I relied on their advice from conversations I had even during Project 2, as it was still relevant.  Big thanks to them all.
+
 # Sources
+I relied heavily on the Code Institute's Python tutorials and the 'Love Sandwiches' walk-through project as I was a complete beginner with Python. 
+
+I also found Eric Matthes (2023) "Python Crash Course: Third Edition" very helpful. 
+
+These are some of the main online sources I used during the development of this game: 
+
+- https://www.freecodecamp.org/news/how-to-strip-trailing-whitespace-in-python/#:~:text=To%20trim%20a%20string%20and,by%20default%2C%20will%20remove%20it.
+- https://medium.com/@smhashirashfaq/how-to-create-your-own-hang-man-game-using-python-e93f2686b33d#:~:text=You%20can%20add%20as%20many%20words%20as%20you%20want%20to%20the%20list.&text=Using%20the%20random%20library%2C%20we,from%20the%20list%20of%20words.&text=Now%2C%20we%20will%20create%20a,the%20word%20from%20the%20player.
+- https://stackoverflow.com/questions/70642903/python-hangman-horizontal-letter-view
+- https://stackoverflow.com/questions/74424323/how-to-change-the-underscores-to-letters-in-python-hangman
+- https://stackoverflow.com/questions/19760161/how-to-hide-reveal-letters-in-python-game
+- https://realpython.com/inner-functions-what-are-they-good-for/#:~:text=If%20you%20define%20a%20function,define%20in%20the%20enclosing%20function.
+- https://stackoverflow.com/questions/52045352/how-to-choose-random-word-in-python-from-a-list-of-words?rq=3
+- https://stackoverflow.com/questions/55325444/retrieving-a-random-word-from-a-textfile
+- https://stackoverflow.com/questions/21031592/importing-function-in-python
+- https://codereview.stackexchange.com/questions/262813/python-text-based-hangman-game
+- https://stackoverflow.com/questions/26410531/how-to-allow-the-user-to-add-words-to-the-hangman-game
+- https://stackoverflow.com/questions/13452410/creating-hyperlinks-in-python
+- https://medium.com/codex/decoding-python-functions-default-positional-and-keyword-arguments-2059423c3981#:~:text=The%20*%20before%20the%20parameter%20name,you%20use%20*%20before%20the%20name.
+- https://stackoverflow.com/questions/5813311/whats-the-significance-of-the-no-newline-at-end-of-file-log
+- https://peps.python.org/pep-0008/#:~:text=The%20preferred%20way%20of%20wrapping,a%20backslash%20for%20line%20continuation.
