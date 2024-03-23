@@ -346,9 +346,7 @@ I fixed this by framing the options in a while-loop in order to keep the input f
 
 ![bug-input-inactive](documentation/bugs/input-field-inactive_code.PNG)
 
-- Clues. The clues were in fact the part I found the most difficult to set up, and hence were the most buggy; part of this was due to coding inexperience, and part of it was due to poor coding logic.
-
-- This bug was due to code inexperience: when I first set up the code, it turned out that I was describing the function rather than calling it. My tutor pointed this out during one of our meetings and I could fix it by calling it, i.e. "get_clue1()" rather than so "get_clue1". A simple fix, but one I needed help with.
+- Clues. The clues were in fact the part I found the most difficult to set up, and hence were the most buggy; part of this was due to coding inexperience, and part of it was due to poor coding logic. This bug was due to code inexperience: when I first set up the code, it turned out that I was describing the function rather than calling it. My tutor pointed this out during one of our meetings and I could fix it by calling it, i.e. "get_clue1()" rather than so "get_clue1". A simple fix, but one I needed help with.
 
 ![bug-describe-function](documentation/bugs/clue1_describing-function.PNG)
 
@@ -362,11 +360,11 @@ The problem was to do with my order of operations. Originally I was providing th
 
 So simply swapping the order around so that after the user asked for the clue, I first decremented the number of attempts and then gave the clue was the fix that was needed.
 
-- Faulty order of operations was also the reason why, in the first deloyment of my Clue 2 code, 
+- Faulty order of operations was also the reason why, when I was attempting to ensure that the player had to call Clue 1 before Clue 2, I was getting multiple error messages:    
 
 ![bug_clue2-many-errors](documentation/bugs/clue2-multiple-errors.PNG)
 
-I clear this up by simply moving the multiple characters check to follow the ?? input, and it worked fine.  
+I cleared this up by simply moving the multiple characters check to follow the ?? input, and it worked fine.  
 
 - Input from the enter key. I noticed during testing that, if I pressed the enter key on its own without any extra input, it would use up an attempt. I did not understand that pressing the enter key enters an empty string. With the help of my tutor, I adjusted the following code that I originally designed to stop the users from entering more than one character at a time. Before the fix I had this:
 
@@ -377,7 +375,7 @@ As we discussed during our meeting, my tutor pointed out that I was focusing on 
 ![bug_enter-key](documentation/bugs/enter-key-attempt_fix.PNG)
 
 
-- The final bug was to do with my attempt to concatenate a long line of code in order for it to fit the Pep8 Linter. After splittling the relevant line of code so it conformed to the character limit per line, I could not longer access the information in the leaderboard table:
+- The final bug I will cover here was to do with my attempt to concatenate a long line of code in order for it to fit the Pep8 Linter. After splitting the relevant line of code so it conformed to the character limit per line, I could not longer access the information in the leaderboard table:
 
 ![bug_concat-display-1](documentation/bugs/concat.code.PNG)
 
@@ -402,7 +400,7 @@ Final PEP8 validation feedback: all clear (23.03.2024  17:43):
 
 
 ## Future development
-- In terms of coding: there are definitely places where I could consolidate my code to avoid repitition. For example, it would be possible to merge the code for Clue1 and Clue2, and I think the code for the end-game screen could be consolidated to help maintainability. This would be my priority if I come back to this game.   
+- In terms of coding: there are definitely places where I could consolidate my code to avoid repetition. For example, it would be possible to merge the code for Clue1 and Clue2, and I think the code for the end-game screen could be consolidated to help maintainability. This consolditation of my code would be my priority if I come back to this game.   
 - In terms of gameplay, the next step would be to add difficulty levels, with the hardest being limiting the player to a total number of correct and incorrect guesses, rather than, as here, a situation in which correct guesses are not counted. This would make the game more challenging. 
 - I would like to update the leaderboard to count the total number of guesses per successful game, as well as the 'remaining attempts' (i.e. remaining wrong guesses) which is currently counted.
 - I would also specify how many attempts were available to the player, e.g. was it a game with 10 available attempts, or just 6
@@ -439,6 +437,7 @@ I also found Eric Matthes (2023) "Python Crash Course: Third Edition" very helpf
 
 These are some of the main online sources I used during the development of this game: 
 
+- https://www.w3schools.com/python/default.asp
 - https://www.freecodecamp.org/news/how-to-strip-trailing-whitespace-in-python/#:~:text=To%20trim%20a%20string%20and,by%20default%2C%20will%20remove%20it.
 - https://medium.com/@smhashirashfaq/how-to-create-your-own-hang-man-game-using-python-e93f2686b33d#:~:text=You%20can%20add%20as%20many%20words%20as%20you%20want%20to%20the%20list.&text=Using%20the%20random%20library%2C%20we,from%20the%20list%20of%20words.&text=Now%2C%20we%20will%20create%20a,the%20word%20from%20the%20player.
 - https://stackoverflow.com/questions/70642903/python-hangman-horizontal-letter-view
