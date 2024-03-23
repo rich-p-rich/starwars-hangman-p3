@@ -378,9 +378,9 @@ def leaderboard_page():
     leaderboard_data = leaderboard_sheet.get_all_records()
     myprint("Leaderboard:")
     for entry in leaderboard_data:
-        myprint(f"Player: {entry['Name']},"
-                "Guessed Word:{entry['Guessed Word']}, Remaining Attempts:"
-                "{entry['Remaining Attempts']}")
+        myprint(f"Player: {entry['Name']}, " +
+                f"Guessed Word: {entry['Guessed Word']}, " +
+                f"Remaining Attempts: {entry['Remaining Attempts']}")
 
 
 def update_leaderboard(name, word, attempts):

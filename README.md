@@ -99,7 +99,7 @@ My 'starwars_hangman' Google Doc stores all the answers in column A of the 'answ
 
 The second worksheet is the 'leaderboard': I both call information from it to display the leaderboard, and update it when the successful player chooses to do so. It is updated when the player chooses to add their name, and the .append method adds their name as well as the guessed answer and number of attempts to the worksheet.  
 
-![Linking the google doc](documentation/images/1_links_googledocs.PNG)
+![Linking the google doc](documentation/images/1_api-and-links.PNG)
 
 As part of the set-up and deployment, I set up an API to access the Google Doc usinging the Google OAuth2 protocol
 
@@ -343,35 +343,21 @@ https://stackoverflow.com/questions/1874592/how-to-write-very-long-string-that-c
 - Additionally, I would set up a 'myinput' function to add a left margin to the input commands as well as the myprint statements. 
 - If this were to be developed in much futher depth, a difficulty weighting could be developed whereby a name like Darth Vador would have a difficulty weighting of 1, i.e. the easiest, and Kleya Marki a difficulty level of 10, i.e. the most difficult. Collecting this data and weighting it would be a substantial project in itself, and probably not possible without access to commercial / propietory databases, but it would be a nice way to enhance the leaderboard, with obscure answers guessed in minimal number of total attempts getting maximum points. 
 
+# Deployment to Heroku
+I deployed to Heroku on 7th March 2024, i.e. as soon as possible during the development of this game. I did this following much of the advice and feedback I saw in the Slack communitiy as well as the official guidance. Since then, I have been testing the app in both the GitPod terminal and Heroku. As with the API, I followed the advice in the LoveSandwiches project step-by-step to ensure a successful deployment. The key steps were:
+- set up my Heroku account
+- connected GitHub to Heroku
+- supplied my payment details and and school details (the Code Institute)
+- created my app
+- filled out the settings tab starting with the Config Vars (environment variables)
+- copied the creds.json file and added it to the CREDS variable
+- added Python and node.js buildpacks, ensured they were in this order
+- added PORT 8000 to the Config Var in Heroku's settings 
+- chose GitHub as my deployment method and connected to it
+- connected my Heroku app to my GitHub repository
+- I chose to activate automatic deploys as I had gone over this process in the walk-through project and was happy with it
+- activated Eco Dynos
 
+# Credits
 
-Welcome,
-
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
-
-## Reminders
-
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
-
-## Creating the Heroku app
-
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
-
-1. `heroku/python`
-2. `heroku/nodejs`
-
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
-
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
-
-Connect your GitHub repository and deploy as normal.
-
-## Constraints
-
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
-
----
-
-Happy coding!
+# Sources
