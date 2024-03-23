@@ -12,7 +12,7 @@ This game is aimed primarily at the following:
 ## Purpose
 The purpose of the game is:
 - to test the player's depth of knowledge about Star Wars, from the well-known (Darth Vader and Grogu) to the obscure (the Jedi called Yaddle, or the bar-tender Wuher) to the very deep cuts (Falumpaset creatures or the planet Vandor)
-- to offer the player a fun and relaxing passtime 
+- to offer the player a fun and relaxing pastime 
 
 # What's so Star Wars-y about this game? 
 - The answers are all taken from the so-called 'canon' Star Wars films and TV shows released by George Lucas and from the Disney Era
@@ -89,7 +89,10 @@ I closely followed the guidelines explained in the 'Love Sandwiches' walk-though
 Again, I followed the 'Love Sandwiches' walkthough here:
 - I added the JSON files to my GitPod workspace 
 - shared the client email with my data spreadsheet, and enabled function as editor 
-- add creds.json to the git.ignore folder so that it would not be shared to github to ensure privacy  
+- add creds.json to the git.ignore folder so that it would not be shared to github to ensure privacy. Here you can see that entering "git add and git status" reveals that the creds.json does not appear in the files to be committed (as per the Code Institute advice):
+
+![json](documentation/images/cred.json_no-commit.PNG)
+
 
 ## The spreadsheet: starwars_hangman
 This is a read-only link to the spreadsheet that I used for the game: https://docs.google.com/spreadsheets/d/1s2Sdv2Cj6v-hUnXD9Wr84nehteS9X3BuBctTleoWaK8/edit?usp=sharing
