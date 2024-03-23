@@ -393,4 +393,5 @@ def update_leaderboard(name, word, attempts):
 
 
 display_homescreen()
-
+# The newline is deleted when I push to Github, so I want to acknowledge
+# this here in a comment
