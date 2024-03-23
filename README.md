@@ -389,7 +389,9 @@ As you can see, I did not properly end each line of the string. This was then th
 
 
 ## Pep8 Validation
-The code passes Pep8 validation checked on this this website: https://pep8ci.herokuapp.com/
+When I tested the code from Gitpod with the Pep8 CI validator, it passed Pep8 validation checked on this this website: https://pep8ci.herokuapp.com/
+
+One concern I have here: when I re-tested the code directly from Github and copied it into the linter, the final line at the end was missing. I have tried diverse ways to try to keep the newline there, but I have not found a workable method or any real discussion online or on Slack about this; so while the newline is present here in my Gitpod workspace, it seems to be deleted when I push to GitHub.
 
 I had to use an extra solution for the leaderboard page which had one very long string that runs over three lines, but this was accepted by the CI Python Linter and is functional in the game, so it seems like a good solution:
 https://stackoverflow.com/questions/1874592/how-to-write-very-long-string-that-conforms-with-pep8-and-prevent-e501

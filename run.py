@@ -393,3 +393,4 @@ def update_leaderboard(name, word, attempts):
 
 
 display_homescreen()
+
