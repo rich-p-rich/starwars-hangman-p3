@@ -12,7 +12,7 @@ This game is aimed primarily at the following:
 ## Purpose
 The purpose of the game is:
 - to test the player's depth of knowledge about Star Wars, from the well-known (Darth Vader and Grogu) to the obscure (the Jedi called Yaddle, or the bar-tender Wuher) to the very deep cuts (Falumpaset creatures or the planet Vandor)
-- to offer the player a fun and relaxing pass-time 
+- to offer the player a fun and relaxing passtime 
 
 # What's so Star Wars-y about this game? 
 - The answers are all taken from the so-called 'canon' Star Wars films and TV shows released by George Lucas and from the Disney Era
@@ -389,8 +389,16 @@ As you can see, I did not properly end each line of the string. This was then th
 
 
 ## Pep8 Validation
-The code passes Pep8 validation. I had to use this solution for the leaderboard page which had one very long string that runs over three lines, but this was accepted by the CI Python Linter and is functional in the game, so it seems like a good solution:
+The code passes Pep8 validation checked on this this website: https://pep8ci.herokuapp.com/
+
+I had to use an extra solution for the leaderboard page which had one very long string that runs over three lines, but this was accepted by the CI Python Linter and is functional in the game, so it seems like a good solution:
 https://stackoverflow.com/questions/1874592/how-to-write-very-long-string-that-conforms-with-pep8-and-prevent-e501
+
+Final PEP8 validation feedback: all clear (23.03.2024  17:43):
+
+![pep8](documentation/images/pep8ci_all-clear_230324_1743.PNG)
+
+
 
 ## Future development
 - In terms of coding: there are definitely places where I could consolidate my code to avoid repitition. For example, it would be possible to merge the code for Clue1 and Clue2, and I think the code for the end-game screen could be consolidated to help maintainability. This would be my priority if I come back to this game.   
@@ -440,6 +448,7 @@ These are some of the main online sources I used during the development of this 
 - https://codereview.stackexchange.com/questions/262813/python-text-based-hangman-game
 - https://stackoverflow.com/questions/26410531/how-to-allow-the-user-to-add-words-to-the-hangman-game
 - https://stackoverflow.com/questions/13452410/creating-hyperlinks-in-python
-- https://medium.com/codex/decoding-python-functions-default-positional-and-keyword-arguments-2059423c3981#:~:text=The%20*%20before%20the%20parameter%20name,you%20use%20*%20before%20the%20name.
+- https://medium.com/codex/decoding-python-functions-default-positional-and-keyword-arguments-2059423c3981#:~:text=The%20*%20before%20the%20parameter%20name,you%20use%20*%20before%20the%20name
 - https://stackoverflow.com/questions/5813311/whats-the-significance-of-the-no-newline-at-end-of-file-log
-- https://peps.python.org/pep-0008/#:~:text=The%20preferred%20way%20of%20wrapping,a%20backslash%20for%20line%20continuation.
+- https://peps.python.org/pep-0008/#:~:text=The%20preferred%20way%20of%20wrapping,a%20backslash%20for%20line%20continuation
+- https://ioflood.com/blog/python-concatenate-strings/#:~:text=The%20simplest%20way%20to%20concatenate,str1%20%2B%20'%20'%20%2B%20str2%20.&text=In%20this%20example%2C%20we've,new%20string%20'Hello%20World'

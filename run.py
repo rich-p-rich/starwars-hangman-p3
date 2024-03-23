@@ -112,7 +112,7 @@ def play_the_game():
     wrong_guesses = set()  # monitors wrong guesses to display them to the user
     invalid_characters = [' ', "'", '#', '*', '<', '>', ':', ';', '(', ')',
                           '+', '-', 'ü', 'ö', 'ä', 'ß', '/', '%', '{', '}',
-                           ',', '.', '_', '&', '$', '§', '"']
+                          ',', '.', '_', '&', '$', '§', '"']
     clue1_used = False  # this tracks whether clue1 has been used or not
     clue2_used = False  # this tracks whether clue2 has been used or not
 
